@@ -5,6 +5,7 @@ const petSchema = new Schema(
         petName: {
             type: String,
             required: true,
+            unique: true,
         },
         isDog: {
             type: Boolean,
