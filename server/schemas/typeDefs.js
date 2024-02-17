@@ -28,7 +28,7 @@ const typeDefs = `
   type Mutation {
     login(email: String!, password: String!): Auth
     addProfile(username: String!, email: String!, password: String!): Auth
-    edittProfile(profileId: ID!, email: String, password: String): Profile
+    editProfile(profileId: ID!, email: String, password: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
     editPet(petId: ID!, petName, weight: Float, image: String): Profile
     removePet(petId: ID!): Profile
