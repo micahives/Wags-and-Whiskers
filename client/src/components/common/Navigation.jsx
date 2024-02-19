@@ -17,7 +17,7 @@ const Navigation = () => {
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <Link to="/" className={location.pathname === '/' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : ' text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Profile</Link>
-                                <Link to="/Wellness" className={location.pathname === '/Wellness' ? 'bg-green-70000 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Wellness</Link>
+                                <Link to="/Wellness" className={location.pathname === '/Wellness' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Wellness</Link>
                                 <Link to="/Login" className={location.pathname === '/Login' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Logout</Link>
                             </div>
                         </div>
