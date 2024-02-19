@@ -1,4 +1,16 @@
 @import 'tailwind.css';
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply text-white;
+  }
+  html.dark {
+    @apply text-neutral-50;
+    @apply bg-neutral-700;
+  }
+}
 
 #root {
   max-width: 1280px;

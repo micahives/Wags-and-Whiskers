@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ChecklistItem from '../components/wellness/Checklist';
+import Header from '../components/common/Header';
+
 
 const WellnessPage = () => {
   const [checklist, setChecklist] = useState([
@@ -18,6 +20,8 @@ const WellnessPage = () => {
 
   return (
     <div>
+      <Header/>
+      <div className='mt-32'>
       <h1>Wellness Checklist</h1>
       {checklist.map(item => (
         <ChecklistItem
@@ -27,6 +31,7 @@ const WellnessPage = () => {
           onChange={() => handleChecklistChange(item.id)}
         />
       ))}
+      </div>
     </div>
   );
 };
