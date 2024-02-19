@@ -30,7 +30,7 @@ const typeDefs = `
     addProfile(username: String!, email: String!, password: String!): Auth
     editProfile(profileId: ID!, email: String, password: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
-    editPet(petId: ID!, petName, weight: Float, image: String): Profile
+    editPet(petId: ID!, petName: String, weight: Float, image: String): Profile
     removePet(petId: ID!): Profile
   }
 `;
