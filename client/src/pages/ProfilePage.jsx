@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfileInfo from '../components/profile/ProfileInfo';
+import Header from '../components/common/Header';
 
 const ProfilePage = () => {
   // Demo data
@@ -11,8 +12,10 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <h1>Profile Page</h1>
-      <ProfileInfo {...petProfile} />
+      <Header />
+      <div className="mt-32">
+        <ProfileInfo {...petProfile} />
+      </div>
     </div>
   );
 };
