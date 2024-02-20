@@ -1,5 +1,5 @@
 {
-    "name": "mern-shopping",
+    "name": "pet-wellness",
     "version": "1.0.0",
     "description": "",
     "main": "server/server.js",
@@ -17,6 +17,5 @@
         "concurrently": "^5.1.0"
     },
     "dependencies": {
-        "bcrypt": "^5.1.1"
     }
 }
