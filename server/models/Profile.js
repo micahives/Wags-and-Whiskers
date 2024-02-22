@@ -21,6 +21,7 @@ const profileSchema = new Schema(
             required: true,
         },
         myPets: [petSchema],
+        default: [],
     },
     {
         toJSON: {
