@@ -11,6 +11,10 @@ const petSchema = new Schema(
             type: Boolean,
             required: true,
         },
+        activities: {
+            type: Array,
+            default: []
+        },
         age: {
             type: Number,
             default: 3

@@ -1,12 +1,13 @@
+const { dogCare, catCare } = require('../utils/careActivities');
 const { Profile } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
 const resolvers = {
     Query: {
-        Profiles: async(parent, args) => {
+        profiles: async(parent, args) => {
             return Profile.find();
         },
-        Profile: async( parent, { profileId }) => {
+        profile: async( parent, { profileId }) => {
             return Profile.findOne({ _id: profileId });
         },
         me: async (parent, args, context) => {
@@ -40,10 +41,15 @@ const resolvers = {
             return { token, profile };
           },
         addProfile: async (parent, {username, email, password}) => {
-            const profile = Profile.create({username, email, password});
-            const token = signToken(profile);
+            console.log('message');
+            try {
+              const profile = await Profile.create({username, email, password});
+              const token = signToken(profile);
             
-            return { token, profile }
+              return { token, profile }
+            } catch (err) {
+                console.error(err);
+            }
           },
         editProfile: async (parent, { email, password }, context) => {
             if (!context.profile) {
@@ -75,12 +81,19 @@ const resolvers = {
             }
 
             try {
+                let activities = [];
+
+                if (isDog) {
+                    activities =  dogCare;
+                } activities = catCare;
+
                 const newPet = await Profile.findOneAndUpdate(
                     { _id: context.profile._id },
                     { $addToSet: {
                         myPets: {
                             petName: petName,
                             isDog: isDog,
+                            activities: activities,
                             age: age,
                             weight: weight,
                             image: image
@@ -91,6 +104,8 @@ const resolvers = {
                         runValidators: true
                     },
                 );
+
+                
 
                 return newPet;
             } catch (error) {
@@ -142,4 +157,6 @@ const resolvers = {
             };
         }
     },
-}
+};
+
+module.exports = resolvers;
