@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 
 const ProfilePage = () => {
   // Demo data
@@ -16,6 +17,7 @@ const ProfilePage = () => {
       <div className="mt-32">
         <ProfileInfo {...petProfile} />
       </div>
+      <Footer />
     </div>
   );
 };
