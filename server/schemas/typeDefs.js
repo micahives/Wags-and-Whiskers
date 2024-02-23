@@ -1,3 +1,6 @@
+// remember to add 'myPets: [Pet]' field, removed for
+// testing the login/account creation
+
 const typeDefs = `
   type Profile {
     _id: ID

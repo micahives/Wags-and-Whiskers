@@ -51,7 +51,7 @@ const SignUpForm = ({ onSubmit }) => {
             <form onSubmit={handleFormSubmit}>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Username"
                   name="username"
                   type="text"
@@ -61,7 +61,7 @@ const SignUpForm = ({ onSubmit }) => {
               </div>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -71,7 +71,7 @@ const SignUpForm = ({ onSubmit }) => {
               </div>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                   name="password"
                   type="password"
