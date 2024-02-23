@@ -1,13 +1,14 @@
-import { Profile } from '../models';
 
-export const dogVisits = async (age, id, petID) => {
-    if (age < 104 ) {
-        const setActivities = await Profile.findOneAndUpdate(
-            { _id: context.profile._id, 'myPets._id': petId }
-        )
-    }
-}
 
+const newPetActivities = (activities, age) => {
+    const ageThreshold = 52;
+
+    return activities.map(activity => ({
+        ...activity,
+        isComplete: activity.category === (age > ageThreshold ? 'young' : 'adult'),
+    })
+  );
+};
 
 // const mongoose = require('mongoose');
 // const Schema = mongoose.Schema;
@@ -34,3 +35,7 @@ export const dogVisits = async (age, id, petID) => {
 //   .catch(error => {
 //     console.error('Error updating pet:', error);
 //   });
+
+module.exports = {
+    newPetActivities
+}

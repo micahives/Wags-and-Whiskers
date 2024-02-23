@@ -1,4 +1,5 @@
 const { dogCare, catCare } = require('../utils/careActivities');
+const {newPetActivities} = require('../utils/helpers');
 const { Profile } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
@@ -41,7 +42,6 @@ const resolvers = {
             return { token, profile };
           },
         addProfile: async (parent, {username, email, password}) => {
-            console.log('message');
             try {
               const profile = await Profile.create({username, email, password});
               const token = signToken(profile);
@@ -81,11 +81,9 @@ const resolvers = {
             }
 
             try {
-                let activities = [];
+                let activities = isDog? dogCare : catCare;
 
-                if (isDog) {
-                    activities =  dogCare;
-                } activities = catCare;
+                activites = newPetActivities(activities, age);
 
                 const newPet = await Profile.findOneAndUpdate(
                     { _id: context.profile._id },
@@ -105,7 +103,8 @@ const resolvers = {
                     },
                 );
 
-                
+                // if age < 52 weeks, update all activities with category 'puppy' to isComplete: false
+                // if age > 52 weeks, update all activities with category 'adult' to isComplete: false
 
                 return newPet;
             } catch (error) {
