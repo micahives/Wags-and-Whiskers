@@ -22,8 +22,8 @@ const profileSchema = new Schema(
         },
         myPets: {
             type: [petSchema],
-            default: [],
-        }
+        },
+
     },
     {
         toJSON: {
@@ -41,6 +41,7 @@ profileSchema.pre('save', async function (next) {
 
     next();
 });
+
 
 // compare and validate password for login
 profileSchema.methods.isCorrectPassword = async function (password) {

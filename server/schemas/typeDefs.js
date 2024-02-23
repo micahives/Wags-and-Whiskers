@@ -10,11 +10,22 @@ const typeDefs = `
   }
 
   type Pet {
+    _id: ID
     petName: String
     isDog: Boolean
-    currentAge: Int
+    age: Int
     weight: Float
     image: String
+    activities: [Activity]
+  }
+
+  type Activity {
+    _id: ID
+    name: String
+    frequency: String
+    category: String
+    isComplete: Boolean
+    lastCompleted: [String]
   }
 
   type Auth {
@@ -33,8 +44,9 @@ const typeDefs = `
     addProfile(username: String!, email: String!, password: String!): Auth
     editProfile(profileId: ID!, email: String, password: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
-    editPet(petId: ID!, petName: String, weight: Float, image: String): Profile
-    removePet(petId: ID!): Profile
+    editPet(_id: ID!, petName: String, weight: Float, image: String): Profile
+    editActivity(_id: ID!, isComplete: Boolean!): Pet
+    removePet(_id: ID!): Profile
   }
 `;
 
