@@ -8,7 +8,6 @@ import Auth from '../../utils/auth';
 const LoginForm = ({onSubmit}) => {
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [formState, setFormState] = useState({ email: '', password: '' });
-  // THE PROBLEM IS HERE! ON THIS LINE BELOW, INVARIANT ERROR
 
     // update state based on form input changes
     const handleChange = (event) => {
@@ -42,50 +41,49 @@ const LoginForm = ({onSubmit}) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
+    <main className="flex justify-center my-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+          <h2 className="text-center text-xl text-gray-900 font-bold mb-4">Login</h2>
+          {data ? (
+            <p className="text-center text-green-500 mb-4">
+              Success! You may now head <Link to="/" className="text-blue-500">back to the homepage.</Link>
+            </p>
+          ) : (
+            <form onSubmit={handleFormSubmit}>
+              <div className="mb-4">
                 <input
-                  className="form-input"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
                 />
+              </div>
+              <div className="mb-4">
                 <input
-                  className="form-input"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
               </div>
-            )}
-          </div>
+              <button
+                className="w-full bg-black hover:bg-gray-600 font-bold py-2 px-4 rounded"
+                type="submit"
+              >
+                Submit
+              </button>
+            </form>
+          )}
+          {error && (
+            <div className="my-3 p-3 bg-red-500 text-white text-center">
+              {error.message}
+            </div>
+          )}
         </div>
       </div>
     </main>
