@@ -1,19 +1,18 @@
 const { Schema } = require('mongoose');
+const activitySchema = require('./Activity');
 
 const petSchema = new Schema(
     {
         petName: {
             type: String,
             required: true,
-            unique: true,
         },
         isDog: {
             type: Boolean,
             required: true,
         },
         activities: {
-            type: Array,
-            default: []
+            type: [activitySchema],
         },
         age: {
             type: Number,
@@ -33,7 +32,7 @@ const petSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
-        }
+        },
     }
 );
 

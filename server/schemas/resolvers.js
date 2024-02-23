@@ -3,6 +3,7 @@ const {newPetActivities} = require('../utils/helpers');
 const { Profile } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
+
 const resolvers = {
     Query: {
         profiles: async(parent, args) => {
@@ -81,9 +82,12 @@ const resolvers = {
             }
 
             try {
-                let activities = isDog? dogCare : catCare;
+                const activityList = isDog === true ? dogCare : catCare;
+                                
+                const activities = activityList.filter(item => item.category === (age < 52 ? 'young' : 'adult'));
 
-                activites = newPetActivities(activities, age);
+                //the below commented out, would be used if more date logic were going to be applied to displayed activities
+                //activities = newPetActivities(activities, age);
 
                 const newPet = await Profile.findOneAndUpdate(
                     { _id: context.profile._id },
@@ -102,9 +106,6 @@ const resolvers = {
                         runValidators: true
                     },
                 );
-
-                // if age < 52 weeks, update all activities with category 'puppy' to isComplete: false
-                // if age > 52 weeks, update all activities with category 'adult' to isComplete: false
 
                 return newPet;
             } catch (error) {
