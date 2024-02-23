@@ -5,7 +5,7 @@ const petSchema = new Schema(
         petName: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
         },
         isDog: {
             type: Boolean,
@@ -13,7 +13,7 @@ const petSchema = new Schema(
         },
         activities: {
             type: Array,
-            default: []
+            // default: []
         },
         age: {
             type: Number,
