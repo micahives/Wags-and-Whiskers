@@ -20,8 +20,10 @@ const profileSchema = new Schema(
             type: String,
             required: true,
         },
-        myPets: [petSchema],
-        default: [],
+        myPets: {
+            type: [petSchema],
+            default: [],
+        }
     },
     {
         toJSON: {
