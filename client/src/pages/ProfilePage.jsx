@@ -14,7 +14,7 @@ const ProfilePage = () => {
   return (
     <div>
       <Header />
-      <div className="mt-32">
+      <div className="mt-64">
         <ProfileInfo {...petProfile} />
       </div>
       <Footer />
