@@ -3,12 +3,17 @@ import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { LOGIN_USER } from '../../utils/mutations';
 
+import { useNavigate } from 'react-router-dom';
+
+
+
 import Auth from '../../utils/auth';
+import loggedin from '../../utils/auth'
 
 const LoginForm = ({onSubmit}) => {
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [formState, setFormState] = useState({ email: '', password: '' });
-
+  const navigate = useNavigate();
     // update state based on form input changes
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -38,6 +43,13 @@ const LoginForm = ({onSubmit}) => {
       email: '',
       password: '',
     });
+
+    // if (loggedin){
+    //   console.log("LOGGED IN")
+    //   navigate('/Profile');
+    // }
+
+
   };
 
   return (
@@ -45,11 +57,13 @@ const LoginForm = ({onSubmit}) => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded px-8 pt-6 pb-8 mb-4">
           <h2 className="text-center text-xl text-gray-900 font-bold mb-4">Login</h2>
+          
           {data ? (
             <p className="text-center text-green-500 mb-4">
-              Success! You may now head <Link to="/" className="text-blue-500">back to the homepage.</Link>
+              Success! You may now head <Link to="/Profile" className="text-blue-500">to  your profile.</Link>
             </p>
           ) : (
+
             <form onSubmit={handleFormSubmit}>
               <div className="mb-4">
                 <input
