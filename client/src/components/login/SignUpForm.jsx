@@ -45,13 +45,13 @@ const SignUpForm = ({ onSubmit }) => {
           <h2 className="text-center text-xl text-gray-900 font-bold mb-4">Create Account</h2>
           {data ? (
             <p className="text-center text-green-500 mb-4">
-              Success! You may now head <Link to="/" className="text-blue-500">back to the homepage.</Link>
+              Success! You may now head <Link to="/Profile" className="text-blue-500">to your profile</Link>
             </p>
           ) : (
             <form onSubmit={handleFormSubmit}>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Username"
                   name="username"
                   type="text"
@@ -61,7 +61,7 @@ const SignUpForm = ({ onSubmit }) => {
               </div>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -71,7 +71,7 @@ const SignUpForm = ({ onSubmit }) => {
               </div>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                   name="password"
                   type="password"

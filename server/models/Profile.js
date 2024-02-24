@@ -23,6 +23,7 @@ const profileSchema = new Schema(
         myPets: {
             type: [petSchema],
         },
+
     },
     {
         toJSON: {

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AnimalIcon from '../../assets/animalicongreen.svg';;
+import Auth from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
     const location = useLocation();
+
 
     return (
         <nav className="border-b-2 py-4 fixed w-full top-0 z-10">
@@ -18,7 +21,7 @@ const Navigation = () => {
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <Link to="/Profile" className={location.pathname === '/Profile' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : ' text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Profile</Link>
                                 <Link to="/Wellness" className={location.pathname === '/Wellness' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Wellness</Link>
-                                <Link to="/" className={location.pathname === '/' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Logout</Link>
+                                <Link to="/" onClick={Auth.logout} className={location.pathname === '/' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Logout</Link>
                             </div>
                         </div>
                     </div>
