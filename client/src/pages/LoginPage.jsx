@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/login/LoginForm';
 import SignUpForm from '../components/login/SignUpForm';
 import AnimalIcon from '../assets/animalicongreen.svg';
-import Auth from '../utils/auth'
 
 
 const LoginPage = () => {
@@ -13,16 +12,10 @@ const LoginPage = () => {
 
   const handleLoginSubmit = (formData) => {
     console.log('Login form submitted with data:', formData);
-    if (true /* Successful login condition */) {
-      navigate('/Profile');
-    }
   };
 
   const handleSignUpSubmit = (formData) => {
     console.log('Sign up form submitted with data:', formData);
-    if (true ) {
-      navigate('/Profile');
-    }
   };
 
   const handleSignUpClick = () => {
@@ -42,31 +35,6 @@ const LoginPage = () => {
   const handleCloseLoginForm = () => {
     setShowLoginForm(false);
   };
-
-
-// If user is logged in, navigate to /Profile page
-    const navigate = useNavigate();
-    // useEffect(() => {
-    //  Auth.loggedIn {
-    //     navigate('/Profile');
-    //     alert("you are logged in")
-    //     console.log("LOGGED IN")
-    //   }
-    // }, [Auth.loggedIn]);
-  
-
-
-    // useEffect(() => {
-    //   const isLoggedIn = Auth.loggedIn;
-    //   // console.log(isLoggedIn())
-    //   if (Auth.loggedIn) {
-    //     // If user is logged in, navigate to the desired page
-    //     navigate('/Profile');
-    //   }
-    // }, [navigate]);
-
-
-
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">

@@ -45,7 +45,7 @@ const LoginForm = ({onSubmit}) => {
       <div className="w-full max-w-md">
         <div className="bg-white rounded px-8 pt-6 pb-8 mb-4">
           <h2 className="text-center text-xl text-gray-900 font-bold mb-4">Login</h2>
-                    {data ? (
+          {data ? (
             <p className="text-center text-green-500 mb-4">
               Success! You may now head <Link to="/Profile" className="text-blue-500">to  your profile.</Link>
             </p>

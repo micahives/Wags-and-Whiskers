@@ -22,7 +22,6 @@ const Navigation = () => {
                                 <Link to="/Profile" className={location.pathname === '/Profile' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : ' text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Profile</Link>
                                 <Link to="/Wellness" className={location.pathname === '/Wellness' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Wellness</Link>
                                 <Link to="/" onClick={Auth.logout} className={location.pathname === '/' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium'}>Logout</Link>
-                                {/* <button onClick={Auth.logout}>Logout</button> */}
                             </div>
                         </div>
                     </div>
