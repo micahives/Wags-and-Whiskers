@@ -37,6 +37,7 @@ const typeDefs = `
     profiles: [Profile]!
     profile(profileId: ID!): Profile
     me: Profile
+    petProfile(petId: ID!): Profile
   }
 
   type Mutation {
@@ -45,7 +46,7 @@ const typeDefs = `
     editProfile(profileId: ID!, email: String, password: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
     editPet(_id: ID!, petName: String, weight: Float, image: String): Profile
-    editActivity(_id: ID!, isComplete: Boolean!): Pet
+    editActivity(_id: ID!, isComplete: Boolean!): Profile
     removePet(_id: ID!): Profile
   }
 `;
