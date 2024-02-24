@@ -10,6 +10,34 @@ const newPetActivities = (activities, age) => {
   );
 };
 
+// helper function to compare current age to wellness activities listed.  
+// If younger than a year old, nothing happens
+// if older than a year old and activites are 'young', it will set all isComplete to true for that set
+// if older than a year old and activities are 'adult', nothing happens.
+const activityUpdate = async ( profile ) => {;
+
+    for (i=0; i< profile.myPets.length; i++) {
+        const currentAge = profile.myPets[i].currentAge;
+        const activitySet = profile.myPets[i].activities.reduce((result, item) => {
+            return result || item.category;
+        }, null);
+
+        if (currentAge < 52) {
+            return profile;
+        } else if (currentAge > 52 && activitySet === 'young') {
+            profile.myPets[i].activities.map(activity => activity.isComplete = true);
+        }
+    }
+
+    return profile;
+};
+
+/** for each pet
+ * if currentAge is less that
+ */
+
+
+
 // const mongoose = require('mongoose');
 // const Schema = mongoose.Schema;
 
@@ -37,5 +65,6 @@ const newPetActivities = (activities, age) => {
 //   });
 
 module.exports = {
-    newPetActivities
+    newPetActivities,
+    activityUpdate,
 }

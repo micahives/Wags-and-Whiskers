@@ -1,5 +1,5 @@
 const { dogCare, catCare } = require('../utils/careActivities');
-const {newPetActivities} = require('../utils/helpers');
+const { newPetActivities, activityUpdate } = require('../utils/helpers');
 const { Profile } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
@@ -15,10 +15,21 @@ const resolvers = {
         me: async (parent, args, context) => {
             try {
               if (context.profile) {
-                return Profile.findOne({ _id: context.profile._id });
+                return await Profile.findOne({ _id: context.profile._id });
               } else {
                 return AuthenticationError;
               }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        petProfile: async (parent, { petId }, context) => {
+            try {
+                if (!petId) {
+                    return AuthenticationError;
+                } else {
+                    return await Profile.findOne({ 'myPets._id': petId });
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -27,7 +38,7 @@ const resolvers = {
 
     Mutation: {
         login: async (parent, { email, password }) => {
-            const profile = await Profile.findOne({ email });
+            let profile = await Profile.findOne({ email });
       
             if (!profile) {
               throw AuthenticationError;
