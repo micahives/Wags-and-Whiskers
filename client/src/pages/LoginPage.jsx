@@ -7,20 +7,13 @@ import AnimalIcon from '../assets/animalicongreen.svg';
 const LoginPage = () => {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const navigate = useNavigate();
-
+  
   const handleLoginSubmit = (formData) => {
     console.log('Login form submitted with data:', formData);
-    if (true /* Successful login condition */) {
-      navigate('/');
-    }
   };
 
   const handleSignUpSubmit = (formData) => {
     console.log('Sign up form submitted with data:', formData);
-    if (true ) {
-      navigate('/');
-    }
   };
 
   const handleSignUpClick = () => {
@@ -86,5 +79,6 @@ const LoginPage = () => {
     </div>
   );
 };
+
 
 export default LoginPage;

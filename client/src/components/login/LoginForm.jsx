@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { LOGIN_USER } from '../../utils/mutations';
-
 import Auth from '../../utils/auth';
 
 const LoginForm = ({onSubmit}) => {
   const [login, { error, data }] = useMutation(LOGIN_USER);
   const [formState, setFormState] = useState({ email: '', password: '' });
-
     // update state based on form input changes
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -38,7 +36,7 @@ const LoginForm = ({onSubmit}) => {
       email: '',
       password: '',
     });
-  };
+ };
 
   return (
     <main className="flex justify-center my-4">
@@ -47,13 +45,13 @@ const LoginForm = ({onSubmit}) => {
           <h2 className="text-center text-xl text-gray-900 font-bold mb-4">Login</h2>
           {data ? (
             <p className="text-center text-green-500 mb-4">
-              Success! You may now head <Link to="/" className="text-blue-500">back to the homepage.</Link>
+              Success! You may now head <Link to="/Profile" className="text-blue-500">to  your profile.</Link>
             </p>
           ) : (
             <form onSubmit={handleFormSubmit}>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -63,7 +61,7 @@ const LoginForm = ({onSubmit}) => {
               </div>
               <div className="mb-4">
                 <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="******"
                   name="password"
                   type="password"
