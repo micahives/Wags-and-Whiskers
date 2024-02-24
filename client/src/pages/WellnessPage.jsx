@@ -41,7 +41,7 @@ const handleChecklistChange = (id) => {
       <Header/>
         <div className="flex flex-col items-center  min-h-screen">
       <br />
-      <div className='mt-32'>
+      <div className='mt-4'>
       <br />
       <br />
       <br />
