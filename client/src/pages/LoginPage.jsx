@@ -4,12 +4,10 @@ import LoginForm from '../components/login/LoginForm';
 import SignUpForm from '../components/login/SignUpForm';
 import AnimalIcon from '../assets/animalicongreen.svg';
 
-
 const LoginPage = () => {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   
-
   const handleLoginSubmit = (formData) => {
     console.log('Login form submitted with data:', formData);
   };
