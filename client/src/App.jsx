@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Outlet, Routes, Route } from 'react-router-dom';
 import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 import {
     ApolloClient,
     InMemoryCache,
@@ -34,9 +35,17 @@ const client = new ApolloClient({
   function App() {
     return (
       <ApolloProvider client={client}>
+        <div className="bg-red-500 flex-column justify-flex-start min-100-vh">
+          <div className="h-15 bg-blue-400 absolute top-0 left-0 right-0 text-center">
+            <Header />
+          </div>
           <div className="container w-full">
             <Outlet />
           </div>
+        <div className="bg-red-400 absolute bottom-0 left-0 right-0 text-center">
+          <Footer />
+        </div> 
+        </div>
       </ApolloProvider>
     );
   }
