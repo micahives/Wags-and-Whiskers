@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import ChecklistItem from '../components/wellness/Checklist';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer'
 import { dogCare, catCare } from '../../utils/careActivities';
-
 
 
 const WellnessPage = () => {
@@ -38,7 +35,6 @@ const handleChecklistChange = (id) => {
 
   return (
     <div>
-      <Header/>
         <div className="flex flex-col items-center  min-h-screen">
       <br />
       <div className='mt-4'>
@@ -77,7 +73,6 @@ const handleChecklistChange = (id) => {
 <br />
 </div>
       </div>
-      <Footer/>
     </div>
   );
 };

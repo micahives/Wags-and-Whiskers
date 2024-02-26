@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
 import ProfileInfo from '../components/profile/ProfileInfo';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
+import ProfilePicture from '../components/profile/ProfilePicture';
+import '../../src/'
+
 
 const ProfilePage = () => {
   // Demo data
@@ -11,13 +13,23 @@ const ProfilePage = () => {
     age: 5,
   };
 
+  const [ image ] = useState(null) 
+
   return (
-    <div>
-      <Header />
-      <div className="mt-64">
-        <ProfileInfo {...petProfile} />
+    <div className="h-full">
+      <div>
+        <div>
+          <div>
+            <ProfilePicture image={image} />
+          </div>
+          <div className="mt-32">
+            <ProfileInfo {...petProfile} />
+          </div >
+        </div>
+        <div>
+          {/* Add Pet and list of pets */}
+        </div>
       </div>
-      <Footer />
     </div>
   );
 };
