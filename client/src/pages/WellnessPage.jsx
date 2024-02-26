@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import ChecklistItem from '../components/wellness/Checklist';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer'
-
 import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import {PET_PROFILE} from '../utils/queries'
 import { useParams } from 'react-router-dom'; 
+
 
 const WellnessPage = () => {
 
@@ -79,7 +79,6 @@ const handleChecklistChange = (id) => {
   return (
 
     <div>
-      <Header/>
         <div className="flex flex-col items-center  min-h-screen">
       <br />
       <div className='mt-32'>
@@ -169,7 +168,6 @@ const handleChecklistChange = (id) => {
 <br />
 </div>
       </div>
-      <Footer/>
     </div>
   );
 };
