@@ -37,17 +37,18 @@ const typeDefs = `
     profiles: [Profile]!
     profile(profileId: ID!): Profile
     me: Profile
-    petProfile(petId: ID!): Profile
+    petProfile(petId: ID!): Pet
+    petActivity: [Activity]
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addProfile(username: String!, email: String!, password: String!): Auth
     editProfile(profileId: ID!, email: String, password: String): Profile
-    addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
-    editPet(_id: ID!, petName: String, weight: Float, image: String): Profile
-    editActivity(_id: ID!, isComplete: Boolean!): Profile
-    removePet(_id: ID!): Profile
+    addPet(profileId: ID!, petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
+    editPet(petId: ID!, petName: String, weight: Float, image: String): Pet
+    editActivity(petId: ID!, activityId: ID!, isComplete: Boolean!): Pet
+    removePet(petId: ID!): Profile
   }
 `;
 
