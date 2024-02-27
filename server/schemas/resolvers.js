@@ -1,6 +1,6 @@
 const { dogCare, catCare } = require('../utils/careActivities');
-const { newPetActivities, activityUpdate } = require('../utils/helpers');
-const { Profile, Pet, Activity } = require('../models');
+const { newPetActivities, activityUpdate, checkAge } = require('../utils/helpers');
+const { Profile, Pet } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
 
@@ -28,7 +28,18 @@ const resolvers = {
                 if (!petId) {
                     return AuthenticationError;
                 } else {
-                    return await Pet.findOne({ _id: petId });
+                    let petProfile = await Pet.findOne({ _id: petId });
+
+                    // checks age against activity list.  If over 52 weeks, all 'young' activities are marked isComplete and 'adult' activities are added to Pet object
+                    petProfile = await checkAge(petProfile);
+
+                    // updates the activity to false if it has been longer than the frequency would dictate
+                    petProfile = await activityUpdate(petProfile);
+
+                    // saves any changes to the Pet object to the database before being sent to the user
+                    petProfile.save();
+
+                    return petProfile;
                 }
             } catch (error) {
                 console.log(error);
@@ -38,7 +49,7 @@ const resolvers = {
 
     Mutation: {
         login: async (parent, { email, password }) => {
-            let profile = await Profile.findOne({ email });
+            let profile = await Profile.findOne({ email })
       
             if (!profile) {
               throw AuthenticationError;
@@ -50,10 +61,7 @@ const resolvers = {
               throw AuthenticationError;
             };
 
-            profile = await activityUpdate(profile);
-            profile.save();
-      
-            const token = signToken(profile);
+            const token = signToken(profile);      
             return { token, profile };
           },
         addProfile: async (parent, {username, email, password}) => {
@@ -90,12 +98,11 @@ const resolvers = {
             }
 
             try {
+                // populates dog or cat activities based on user input
                 const activityList = isDog === true ? dogCare : catCare;
                                 
+                // filters activities based on age listed by user
                 const activities = activityList.filter(item => item.category === (age < 52 ? 'young' : 'adult'));
-
-                //the below commented out, would be used if more date logic were going to be applied to displayed activities
-                //activities = newPetActivities(activities, age);
 
                 const newPet = await Pet.create({
                         petName: petName,
@@ -106,7 +113,8 @@ const resolvers = {
                         image: image
                 });
                 
-                await Profile.findOneAndUpdate( {_id: context.profile._id}, { $push: {myPets: newPet }});
+                // pushes new Pet object to the user's Profile to be referenced later
+                const addPetToProfile = await Profile.findOneAndUpdate( {_id: context.profile._id}, { $push: {myPets: newPet}});
 
                 return newPet;
             } catch (error) {
@@ -138,12 +146,14 @@ const resolvers = {
             }
 
             try {
+                // removes reference object from Profile
                 const updateProfile = await Profile.findOneAndUpdate(
                     { _id: context.profile._id },
                     { $pull: {myPets: { _id: petId}}},
                     { new: true },
                 );
 
+                // deletes Pet object from database
                 await Pet.deleteOne({ _id: petId })
 
                 return updateProfile;
@@ -156,15 +166,33 @@ const resolvers = {
             if (!context.profile) {
                 return;
             }
-
+            
             try {
-                const updateActivity = await Pet.findOneAndUpdate(
-                    { _id: petId, 'activities._id': activityId },
-                    { $set: { 'activities.$.isComplete': isComplete } },
-                    { new: true }
-                );
+                // changes isComplete to true and adds date of completion to the activity object
+                if (isComplete) {
+                    const updateActivity = await Pet.findOneAndUpdate(
+                        { _id: petId, 'activities._id': activityId },
+                        { 
+                            $set: { 'activities.$.isComplete': isComplete } ,
+                            $push: { 'activities.$.lastCompleted': Date.now() } 
+                        },
+                        { new: true}
+                    );
 
-                    return updateActivity
+                    return updateActivity;
+                } else {
+                    // user can manually change isComplete to false and remove the most recent 'lastCompleted' entry
+                    const updateActivity = await Pet.findOneAndUpdate(
+                        { _id: petId, 'activities._id': activityId },
+                        { 
+                            $set: { 'activities.$.isComplete': isComplete } ,
+                            $pop: { 'activities.$.lastCompleted': 1 } 
+                        },
+                        { new: true}
+                    );
+
+                    return updateActivity;
+                }
             } catch (error) {
                 console.log(error);
                 throw error;
