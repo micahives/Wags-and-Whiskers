@@ -48,7 +48,10 @@ const resolvers = {
       
             if (!correctPw) {
               throw AuthenticationError;
-            }
+            };
+
+            profile = await activityUpdate(profile);
+            profile.save();
       
             const token = signToken(profile);
             return { token, profile };
@@ -124,23 +127,22 @@ const resolvers = {
                 throw error
             };
         },
-        editPet: async (parent, {petId, petName, weight, image}, context) => {
+        editPet: async (parent, { petId, input }, context) => {
             if (!context.profile) {
                 return;
-            } 
+            };
 
             try {
                 const updatePet = await Profile.findOneAndUpdate(
-                    { _id: context.profile._id, 'myPets._id': petId },
-                    { $set: { 'myPets.$': {
-                        petName: petName,
-                        weight: weight,
-                        image: image,
-                    }}},
-                    {
-                        new: true,
-                        runValidators: true,
-                    }
+                    { _id: context.profile_id, 'myPets._id': petId },
+                    { $set: {
+                        'myPets.$.petName': input.petName,
+                        'myPets.$.isDog': input.isDog,
+                        'myPets.$.age': input.age,
+                        'myPets.$.weight': input.weight,
+                        'myPets.$.image': input.image,
+                    }},
+                    { new: true,}
                 );
 
                 return updatePet;

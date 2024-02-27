@@ -6,6 +6,7 @@ const typeDefs = `
     _id: ID
     username: String
     email: String
+    petCount: Int
     myPets: [Pet]
   }
 
@@ -14,6 +15,7 @@ const typeDefs = `
     petName: String
     isDog: Boolean
     age: Int
+    currentAge: Int
     weight: Float
     image: String
     activities: [Activity]
@@ -33,6 +35,23 @@ const typeDefs = `
     profile: Profile
   }
 
+  input ActivityInput {
+    name: String
+    frequency: String
+    category: String
+    isComplete: Boolean
+    lastCompleted: [String]
+  }
+
+  input PetInput {
+    petName: String
+    isDog: Boolean
+    activities: [ActivityInput]
+    age: Int
+    weight: Float
+    image: String
+  }
+
   type Query {
     profiles: [Profile]!
     profile(profileId: ID!): Profile
@@ -44,10 +63,10 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addProfile(username: String!, email: String!, password: String!): Auth
     editProfile(profileId: ID!, email: String, password: String): Profile
-    addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
-    editPet(_id: ID!, petName: String, weight: Float, image: String): Profile
+    addPet(ppetName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Profile
+    editPet(petId: ID!, input: PetInput!): Profile
     editActivity(_id: ID!, isComplete: Boolean!): Profile
-    removePet(_id: ID!): Profile
+    removePet(petId: ID!): Profile
   }
 `;
 
