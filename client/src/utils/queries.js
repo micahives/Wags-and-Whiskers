@@ -19,6 +19,34 @@ query petProfile($petId: ID!) {
       lastCompleted
     }
   }
+}`;
+
+
+export const GET_ME = gql`
+query Me {
+  me {
+    _id
+    username
+    email
+    petCount
+    myPets {
+      _id
+      petName
+      isDog
+      age
+      currentAge
+      weight
+      image
+      activities {
+        _id
+        name
+        frequency
+        category
+        isComplete
+        lastCompleted
+      }
+    }
+  }
 }
-`
+`;
 
