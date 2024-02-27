@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import Header from '../components/common/Header';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import ProfilePicture from '../components/profile/ProfilePicture';
 import '../../src/'
@@ -17,21 +18,25 @@ const ProfilePage = () => {
 
   return (
     <div className="h-full">
-      <div>
-        <div>
-          <div>
-            <ProfilePicture image={image} />
+      <Header /> {/* Include the Header component */}
+      <div className="container mx-auto px-4 py-8 flex justify-center items-center">
+        <div className="mt-20"> {/* Adjust the margin-top as needed */}
+          <div className="flex justify-center items-center">
+            <div>
+              <ProfilePicture image={image} />
+            </div>
+            <div className="ml-8">
+              <ProfileInfo {...petProfile} />
+            </div>
           </div>
-          <div className="mt-32">
-            <ProfileInfo {...petProfile} />
-          </div >
-        </div>
-        <div>
-          {/* Add Pet and list of pets */}
+          <div>
+            {/* Add Pet and list of pets */}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default ProfilePage;
