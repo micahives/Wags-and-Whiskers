@@ -12,10 +12,12 @@ const WellnessPage = () => {
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
-    variables: { petId: '65dd469362baeff6114dca7c' }, // Placeholder, replace with actual pet ID
+    variables: { petId: '65dd5dc741c1e35bf9eeb31b' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
   });
 
-  // Display Pet Profile Data
+
+
+
   useEffect(() => {
     const getPetData = async () => {
       try {
@@ -23,10 +25,26 @@ const WellnessPage = () => {
           return;
         }
 
-        const activities = data.petProfile.myPets[0].activities;
-        const petToDisplay = data.petProfile.myPets[0];
-        setPetProfile(petToDisplay);
-        setPetCareChecklist(activities);
+        const activities = data.petProfile.activities;            // MAPPING ACTIVITIES OUT OF THE RETURNED DATA OBJECT
+        const mappedActivities = activities.map(activity => ({
+          id: activity._id, // Assuming you want to use the activity ID as the unique identifier
+          name: activity.name,
+          frequency: activity.frequency,
+          category: activity.category,
+          isComplete: activity.isComplete,
+          lastCompleted: activity.lastCompleted
+        }));
+        const petToDisplay = data.petProfile;
+    
+        setPetProfile(petToDisplay);//                                  SETTING STATES
+        setPetCareChecklist(mappedActivities)
+    
+
+        // console.log(petCareChecklist)//                                  CONSOLE LOGS
+        // console.log("PET CARE CHECKLIST STATE", JSON.stringify(petCareChecklist))
+        console.log("Activities", JSON.stringify(activities))
+
+
       } catch (err) {
         console.error(err);
       }
@@ -39,34 +57,51 @@ const WellnessPage = () => {
   }, [refetch]);
 
   const handleChecklistChange = (id) => {
+    // const currentDate = date.now
     const updatedPetCareChecklist = petCareChecklist.map((item) =>
-      item._id === id
-        ? { ...item, isChecked: !item.isChecked, isComplete: !item.isComplete }
+      item.id === id
+        ? { ...item, isChecked: !item.isChecked, isComplete: !item.isComplete, }
         : item
     );
     setPetCareChecklist(updatedPetCareChecklist);
   };
 
+  //                                                                                  FILTERING LISTS TO SORT THEM
   const completedPetCareChecklist = petCareChecklist.filter((item) => item.isComplete);
   const yearlyNotCompletedPet = petCareChecklist.filter(
-    (item) => !item.isComplete && (item.frequency === 'yearly' || item.frequency === 'everyThreeYears')
-  );
+    (item) => !item.isComplete && (item.frequency === 'yearly' || item.frequency === 'everyThreeYears'));
   const monthlyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'monthly');
   const dailyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'daily');
 
   return (
     <div>
+      {/* this controls the margin o */}
+      <div className= "mb-32">
       <Header />
-      <div className="flex flex-col items-center min-h-screen">
-        <div className="mt-32">
-          <div>
+      </div>
+
+      <div className=" flex flex-col items-center min-h-screen">
+        <div>
+
+
+
+
+
+
+<div className="bg-gray-700 p-4 rounded-lg">
             <h1 className="text-2xl">Name: {petProfile.petName}</h1>
-            <img src={petProfile.image} alt="Pet Image" />
+            <img  src={petProfile.image} alt="Pet Image" />
             <h3>Weight: {petProfile.weight}</h3>
             <h3>Age: {petProfile.age} Weeks</h3>
-          </div>
+
+</div>
+
+
+{/* CHECKLIST */}
+<div className="bg-gray-700 mt-8 mb-32 p-4 rounded-lg">
 
           <h1>----- Pet Care Checklist -----</h1>
+
 
           <h3 className="text-2xl">- Daily- </h3>
           {dailyToDoPet.map((item) => (
@@ -74,7 +109,7 @@ const WellnessPage = () => {
               key={item.id}
               text={item.name}
               isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item._id)}
+              onChange={() => handleChecklistChange(item.id)}
             />
           ))}
           <br />
@@ -85,7 +120,7 @@ const WellnessPage = () => {
               key={item.id}
               text={item.name}
               isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item._id)}
+              onChange={() => handleChecklistChange(item.id)}
             />
           ))}
           <br />
@@ -96,24 +131,29 @@ const WellnessPage = () => {
               key={item.id}
               text={item.name}
               isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item._id)}
+              onChange={() => handleChecklistChange(item.id)}
             />
           ))}
           <br />
+          </div>
 
-          <div>
+          <div className="mb-32 bg-gray-700 p-4 rounded-lg">
             <h3 className="text-2xl">- Completed - </h3>
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
                 text={item.name}
                 isChecked={item.isChecked}
-                onChange={() => handleChecklistChange(item._id)}
+                onChange={() => handleChecklistChange(item.id)}
               />
             ))}
+           
           </div>
         </div>
       </div>
+
+
+     
     </div>
   );
 };
