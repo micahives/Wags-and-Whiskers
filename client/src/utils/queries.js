@@ -4,23 +4,21 @@ export const PET_PROFILE = gql`
 query petProfile($petId: ID!) {
   petProfile(petId: $petId) {
     _id
-    username
-    email
-    myPets {
+    petName
+    isDog
+    age
+    currentAge
+    weight
+    image
+    activities {
       _id
-      petName
-      isDog
-      age
-      weight
-      image
-      activities {
-        _id
-        name
-        frequency
-        category
-        isComplete
-        lastCompleted
-      }
+      name
+      frequency
+      category
+      isComplete
+      lastCompleted
     }
   }
-}`
+}
+`
+
