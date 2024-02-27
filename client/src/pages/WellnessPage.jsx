@@ -12,7 +12,7 @@ const WellnessPage = () => {
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
-    variables: { petId: '65dd5dc741c1e35bf9eeb31b' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
+    variables: { petId: '65ddfdc08d2f843bb0fb3042' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
   });
 
 
