@@ -66,14 +66,14 @@ const resolvers = {
                 console.error(err);
             }
           },
-        editProfile: async (parent, {profileId, email, password }, context) => {
-            // if (!context.profile) {
-            //     return;
-            // }
+        editProfile: async (parent, { email, password }, context) => {
+            if (!context.profile) {
+                return;
+            }
         
             try {
                 const updatedProfile = await Profile.findOneAndUpdate(
-                    { _id: profileId },
+                    { _id: context.profile._id },
                     { email: email, password: password },
                     { new: true,  runValidators: true }
                 );
@@ -84,10 +84,10 @@ const resolvers = {
                 throw AuthenticationError;
             }
         },
-        addPet: async (parent, {profileId, petName, isDog, age, weight, image}, context) => {
-            // if (!context.profile) {
-            //     return;
-            // }
+        addPet: async (parent, { petName, isDog, age, weight, image}, context) => {
+            if (!context.profile) {
+                return;
+            }
 
             try {
                 const activityList = isDog === true ? dogCare : catCare;
@@ -106,7 +106,7 @@ const resolvers = {
                         image: image
                 });
                 
-                await Profile.findOneAndUpdate( {profileId}, { $push: {myPets: newPet }});
+                await Profile.findOneAndUpdate( {_id: context.profile._id}, { $push: {myPets: newPet }});
 
                 return newPet;
             } catch (error) {
@@ -116,9 +116,9 @@ const resolvers = {
         },
       
         editPet: async (parent, args, context) => {
-            // if (!context.profile) {
-            //     return;
-            // } 
+            if (!context.profile) {
+                return;
+            } 
 
             try {
                 const updatePet = await Pet.findOneAndUpdate( 
@@ -153,9 +153,9 @@ const resolvers = {
             };
         },
         editActivity: async (parent, {petId, activityId, isComplete}, context) => {
-            // if (!context.profile) {
-            //     return;
-            // }
+            if (!context.profile) {
+                return;
+            }
 
             try {
                 const updateActivity = await Pet.findOneAndUpdate(

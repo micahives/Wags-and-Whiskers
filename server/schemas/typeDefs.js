@@ -35,23 +35,6 @@ const typeDefs = `
     profile: Profile
   }
 
-  input ActivityInput {
-    name: String
-    frequency: String
-    category: String
-    isComplete: Boolean
-    lastCompleted: [String]
-  }
-
-  input PetInput {
-    petName: String
-    isDog: Boolean
-    activities: [ActivityInput]
-    age: Int
-    weight: Float
-    image: String
-  }
-
   type Query {
     profiles: [Profile]!
     profile(profileId: ID!): Profile
@@ -63,8 +46,8 @@ const typeDefs = `
   type Mutation {
     login(email: String!, password: String!): Auth
     addProfile(username: String!, email: String!, password: String!): Auth
-    editProfile(profileId: ID!, email: String, password: String): Profile
-    addPet(profileId: ID!, petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
+    editProfile(email: String, password: String): Profile
+    addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
     editPet(petId: ID!, petName: String, weight: Float, image: String): Pet
     editActivity(petId: ID!, activityId: ID!, isComplete: Boolean!): Pet
     removePet(petId: ID!): Profile
