@@ -1,5 +1,5 @@
 const { dogCare, catCare } = require('../utils/careActivities');
-const { newPetActivities, activityUpdate, checkAge } = require('../utils/helpers');
+const { activityUpdate, checkAge } = require('../utils/helpers');
 const { Profile, Pet } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
@@ -34,7 +34,7 @@ const resolvers = {
                     petProfile = await checkAge(petProfile);
 
                     // updates the activity to false if it has been longer than the frequency would dictate
-                    petProfile = await activityUpdate(petProfile);
+                    //petProfile = await activityUpdate(petProfile);
 
                     // saves any changes to the Pet object to the database before being sent to the user
                     petProfile.save();
@@ -122,7 +122,33 @@ const resolvers = {
                 throw error
             };
         },
-      
+        devAddPet: async (parent, {profileId, petName, isDog, age, weight, image}, context) => {
+            
+            try {
+                // populates dog or cat activities based on user input
+                const activityList = isDog === true ? dogCare : catCare;
+                                
+                // filters activities based on age listed by user
+                const activities = activityList.filter(item => item.category === (age < 52 ? 'young' : 'adult'));
+
+                const newPet = await Pet.create({
+                        petName: petName,
+                        isDog: isDog,
+                        activities: activities,
+                        age: age,
+                        weight: weight,
+                        image: image
+                });
+                
+                // pushes new Pet object to the user's Profile to be referenced later
+                const addPetToProfile = await Profile.findOneAndUpdate( {_id: profileId}, { $push: {myPets: newPet}});
+
+                return newPet;
+            } catch (error) {
+                console.error(error);
+                throw error
+            };
+        },
         editPet: async (parent, args, context) => {
             if (!context.profile) {
                 return;

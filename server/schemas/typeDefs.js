@@ -48,6 +48,7 @@ const typeDefs = `
     addProfile(username: String!, email: String!, password: String!): Auth
     editProfile(email: String, password: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
+    devAddPet(profileId: ID!, petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
     editPet(petId: ID!, petName: String, age: Int, weight: Float, image: String): Pet
     editActivity(petId: ID!, activityId: ID!, isComplete: Boolean!): Pet
     removePet(petId: ID!): Profile
