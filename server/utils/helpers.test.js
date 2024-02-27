@@ -12,17 +12,17 @@ describe('activityUpdate function', () => {
             activities: [
                 {
                     frequency: 'monthly',
-                    lastCompleted: new Date('2022-01-01'), // Assuming last completion was in January 2022
+                    lastCompleted: [new Date('2022-01-01')], // Assuming last completion was in January 2022
                     isComplete: true,
                 },
                 {
                     frequency: 'yearly',
-                    lastCompleted: new Date('2021-01-01'), // Assuming last completion was in January 2021
+                    lastCompleted: [new Date('2021-01-01')], // Assuming last completion was in January 2021
                     isComplete: true,
                 },
                 {
                     frequency: 'everyThreeYears',
-                    lastCompleted: new Date('2018-01-01'), // Assuming last completion was in January 2018
+                    lastCompleted: [new Date('2018-01-01')], // Assuming last completion was in January 2018
                     isComplete: true,
                 },
             ],
@@ -40,17 +40,17 @@ describe('activityUpdate function', () => {
             activities: [
                 {
                     frequency: 'monthly',
-                    lastCompleted: new Date('2022-01-01'),
+                    lastCompleted: [new Date('2022-01-01')],
                     isComplete: false, // Expecting isComplete to be updated based on the condition
                 },
                 {
                     frequency: 'yearly',
-                    lastCompleted: new Date('2021-01-01'),
+                    lastCompleted: [new Date('2021-01-01')],
                     isComplete: false, // Expecting isComplete to be updated based on the condition
                 },
                 {
                     frequency: 'everyThreeYears',
-                    lastCompleted: new Date('2018-01-01'),
+                    lastCompleted: [new Date('2018-01-01')],
                     isComplete: false, // Expecting isComplete to be updated based on the condition
                 },
             ],

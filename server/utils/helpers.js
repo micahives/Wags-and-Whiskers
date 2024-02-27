@@ -8,8 +8,10 @@ const activityUpdate = async ( petProfile ) => {
     console.log([currentMonth, currentYear])
 
     for ( let i = 0; i < petProfile.activities.length; i++ ) {
-        const lastCompletedYear = petProfile.activities[i].lastCompleted.getFullYear();
-        const lastCompletedMonth = petProfile.activities[i].lastCompleted.getMonth();
+        const lastCompletedData = petProfile.activities[i].lastCompleted;
+        const fin = lastCompletedData.length - 1
+        const lastCompletedYear = lastCompletedData[fin].getFullYear();
+        const lastCompletedMonth = lastCompletedData[fin].getMonth();
         console.log([lastCompletedMonth, lastCompletedYear])
 
         if ( petProfile.activities[i].frequency === 'monthly' && (currentMonth > lastCompletedMonth || currentYear > lastCompletedYear)) {
