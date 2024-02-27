@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const petSchema = require('./Pet');
+const Pet = require('./Pet');
 
 const profileSchema = new Schema(
     {
@@ -20,9 +20,7 @@ const profileSchema = new Schema(
             type: String,
             required: true,
         },
-        myPets: {
-            type: [petSchema],
-        },
+        myPets: [Pet.schema]
 
     },
     {

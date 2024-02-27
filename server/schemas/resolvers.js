@@ -1,6 +1,6 @@
 const { dogCare, catCare } = require('../utils/careActivities');
 const { newPetActivities, activityUpdate } = require('../utils/helpers');
-const { Profile } = require('../models');
+const { Profile, Pet, Activity } = require('../models');
 const { signToken, AuthenticationError } = require ('../utils/auth');
 
 
@@ -28,7 +28,7 @@ const resolvers = {
                 if (!petId) {
                     return AuthenticationError;
                 } else {
-                    return await Profile.findOne({ 'myPets._id': petId });
+                    return await Pet.findOne({ _id: petId });
                 }
             } catch (error) {
                 console.log(error);
@@ -66,22 +66,16 @@ const resolvers = {
                 console.error(err);
             }
           },
-        editProfile: async (parent, { email, password }, context) => {
-            if (!context.profile) {
-                return;
-            }
+        editProfile: async (parent, {profileId, email, password }, context) => {
+            // if (!context.profile) {
+            //     return;
+            // }
         
             try {
                 const updatedProfile = await Profile.findOneAndUpdate(
-                    { _id: context.profile._id },
-                    { 
-                        email: email,
-                        password: password
-                    },
-                    {
-                        new: true,
-                        runValidators: true
-                    }
+                    { _id: profileId },
+                    { email: email, password: password },
+                    { new: true,  runValidators: true }
                 );
         
                 return updatedProfile;
@@ -90,10 +84,10 @@ const resolvers = {
                 throw AuthenticationError;
             }
         },
-        addPet: async (parent, {petName, isDog, age, weight, image}, context) => {
-            if (!context.profile) {
-                return;
-            }
+        addPet: async (parent, {profileId, petName, isDog, age, weight, image}, context) => {
+            // if (!context.profile) {
+            //     return;
+            // }
 
             try {
                 const activityList = isDog === true ? dogCare : catCare;
@@ -103,23 +97,16 @@ const resolvers = {
                 //the below commented out, would be used if more date logic were going to be applied to displayed activities
                 //activities = newPetActivities(activities, age);
 
-                const newPet = await Profile.findOneAndUpdate(
-                    { _id: context.profile._id },
-                    { $addToSet: {
-                        myPets: {
-                            petName: petName,
-                            isDog: isDog,
-                            activities: activities,
-                            age: age,
-                            weight: weight,
-                            image: image
-                        },
-                    }},
-                    { 
-                        new: true,
-                        runValidators: true
-                    },
-                );
+                const newPet = await Pet.create({
+                        petName: petName,
+                        isDog: isDog,
+                        activities: activities,
+                        age: age,
+                        weight: weight,
+                        image: image
+                });
+                
+                await Profile.findOneAndUpdate( {profileId}, { $push: {myPets: newPet }});
 
                 return newPet;
             } catch (error) {
@@ -127,23 +114,17 @@ const resolvers = {
                 throw error
             };
         },
-        editPet: async (parent, { petId, input }, context) => {
-            if (!context.profile) {
-                return;
-            };
+      
+        editPet: async (parent, args, context) => {
+            // if (!context.profile) {
+            //     return;
+            // } 
 
             try {
-                const updatePet = await Profile.findOneAndUpdate(
-                    { _id: context.profile_id, 'myPets._id': petId },
-                    { $set: {
-                        'myPets.$.petName': input.petName,
-                        'myPets.$.isDog': input.isDog,
-                        'myPets.$.age': input.age,
-                        'myPets.$.weight': input.weight,
-                        'myPets.$.image': input.image,
-                    }},
-                    { new: true,}
-                );
+                const updatePet = await Pet.findOneAndUpdate( 
+                    {_id: args.petId}, 
+                    { $set: args}, 
+                    {new: true });
 
                 return updatePet;
             } catch (error) {
@@ -163,11 +144,31 @@ const resolvers = {
                     { new: true },
                 );
 
+                await Pet.deleteOne({ _id: petId })
+
                 return updateProfile;
             } catch (error) {
                 console.log(error);
                 throw error
             };
+        },
+        editActivity: async (parent, {petId, activityId, isComplete}, context) => {
+            // if (!context.profile) {
+            //     return;
+            // }
+
+            try {
+                const updateActivity = await Pet.findOneAndUpdate(
+                    { _id: petId, 'activities._id': activityId },
+                    { $set: { 'activities.$.isComplete': isComplete } },
+                    { new: true }
+                );
+
+                    return updateActivity
+            } catch (error) {
+                console.log(error);
+                throw error;
+            }
         }
     },
 };

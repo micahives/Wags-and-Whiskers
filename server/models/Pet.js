@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose');
-const activitySchema = require('./Activity');
+const { Schema, model } = require('mongoose');
+const Activity = require('./Activity');
 
 const petSchema = new Schema(
     {
@@ -10,9 +10,6 @@ const petSchema = new Schema(
         isDog: {
             type: Boolean,
             required: true,
-        },
-        activities: {
-            type: [activitySchema],
         },
         age: {
             type: Number,
@@ -27,7 +24,8 @@ const petSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-        }
+        },
+        activities: [Activity.schema]
     },
     {
         toJSON: {
@@ -48,4 +46,6 @@ petSchema.virtual('currentAge').get(function() {
     return this.age + additionalWeeks
 });
 
-module.exports = petSchema;
+const Pet = model('Pet', petSchema);
+
+module.exports = Pet
