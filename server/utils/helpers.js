@@ -1,4 +1,4 @@
-
+const {dogCare, catCare } = require('./careActivities');
 
 const newPetActivities = (activities, age) => {
     const ageThreshold = 52;
@@ -26,15 +26,16 @@ const activityUpdate = async ( profile ) => {;
             return profile;
         } else if (currentAge > 52 && activitySet === 'young') {
             profile.myPets[i].activities.map(activity => activity.isComplete = true);
+
+            const adultActivities = profile.myPets.isDog ? dogCare.filter((activity) => activity.category === 'adult') : catCare.filter((activity) => activity.category === 'adult')
+            profile.myPets[i].activities.push(adultActivities);
         }
+
+
     }
 
     return profile;
 };
-
-/** for each pet
- * if currentAge is less that
- */
 
 
 

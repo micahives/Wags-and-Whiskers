@@ -48,7 +48,10 @@ const resolvers = {
       
             if (!correctPw) {
               throw AuthenticationError;
-            }
+            };
+
+            profile = await activityUpdate(profile);
+            profile.save();
       
             const token = signToken(profile);
             return { token, profile };
@@ -111,6 +114,7 @@ const resolvers = {
                 throw error
             };
         },
+      
         editPet: async (parent, args, context) => {
             // if (!context.profile) {
             //     return;
