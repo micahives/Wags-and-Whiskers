@@ -12,7 +12,7 @@ const WellnessPage = () => {
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
-    variables: { petId: '65db377ec78c694455e49944' }, // Placeholder, replace with actual pet ID
+    variables: { petId: '65dd469362baeff6114dca7c' }, // Placeholder, replace with actual pet ID
   });
 
   // Display Pet Profile Data
@@ -114,7 +114,6 @@ const WellnessPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
