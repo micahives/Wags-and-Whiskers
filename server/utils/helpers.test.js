@@ -1,136 +1,59 @@
-const { newPetActivities, activityUpdate } = require('./helpers');
+const { activityUpdate } = require('./helpers');
+const { mockDeep } = require('jest-mock-extended'); // Using jest-mock-extended to create deep mock objects
 
-// test('newPetActivities should set isComplete to true for young activities when age is less than 52 weeks', () => {
-//     const activities = [
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: true },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: true },
-//     ];
+// Mocking the Pet model
+const Pet = mockDeep(['findOne']);
 
-//     const updatedActivities = newPetActivities(activities, 30);
-
-//     expect(updatedActivities).toEqual([
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: false },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: true },
-//     ]);
-// });
-
-// // Test case for adult with age greater than or equal to 52 weeks
-// test('updateIsCompleteBasedOnAge should set isComplete to true for adult activities when age is greater than or equal to 52 weeks', () => {
-//     const activities = [
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: true },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: true },
-//     ];
-
-//     const updatedActivities = newPetActivities(activities, 60);
-
-//     expect(updatedActivities).toEqual([
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: true },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: false },
-//     ]);
-// });
-
-// // Test case for mixed activities with different categories
-// test('updateIsCompleteBasedOnAge should update isComplete based on age for mixed activities', () => {
-//     const activities = [
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: true },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: true },
-//         { name: 'Bordetella Vaccine', category: 'young', isComplete: true },
-//     ];
-
-//     const updatedActivities = newPetActivities(activities, 30);
-
-//     expect(updatedActivities).toEqual([
-//         { name: 'DHPP Vaccine', category: 'young', isComplete: false },
-//         { name: 'DHPP Vaccine', category: 'adult', isComplete: true },
-//         { name: 'Bordetella Vaccine', category: 'young', isComplete: false },
-//     ]);
-// });
-
-describe('activityUpdate', () => {
-    test('should not update activities if currentAge is less than 52', async () => {
-        const profile = {
-            username: 'justind',
-            email: 'justin@email.com',
-            password: 'password',
-            myPets: [
+describe('activityUpdate function', () => {
+    it('should update isComplete status based on frequency and lastCompleted date', async () => {
+        // Mock data for the petProfile
+        const mockPetProfile = {
+            _id: 'mockPetId',
+            activities: [
                 {
-                    petname: 'Riley',
-                    isDog: true,
-                    currentAge: 30,
-                    activities: [
-                        { name: "New Puppy Visit", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                        { name: "Dewormer Medication", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                        { name: 'Microchip', frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                    ]
-                }
-            ]
+                    frequency: 'monthly',
+                    lastCompleted: new Date('2022-01-01'), // Assuming last completion was in January 2022
+                    isComplete: true,
+                },
+                {
+                    frequency: 'yearly',
+                    lastCompleted: new Date('2021-01-01'), // Assuming last completion was in January 2021
+                    isComplete: true,
+                },
+                {
+                    frequency: 'everyThreeYears',
+                    lastCompleted: new Date('2018-01-01'), // Assuming last completion was in January 2018
+                    isComplete: true,
+                },
+            ],
         };
 
-        const updatedProfile = await activityUpdate(profile);
-        expect(updatedProfile).toEqual(profile);
-    });
+        // Mocking the findOne method of the Pet model to return the mockPetProfile
+        Pet.findOne.mockResolvedValueOnce(mockPetProfile);
 
-    test('should update activities if currentAge is greater than 52 and category is young', async () => {
-        const profile = {
-            username: 'justind',
-            email: 'justin@email.com',
-            password: 'password',
-            myPets: [
-                {
-                    petname: 'Riley',
-                    isDog: true,
-                    currentAge: 54,
-                    activities: [
-                        { name: "New Puppy Visit", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                        { name: "Dewormer Medication", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                        { name: 'Microchip', frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                    ]
-                }
-            ]
-        };
+        // Calling the function with the mocked Pet model
+        const updatedPetProfile = await activityUpdate(mockPetProfile);
 
-        const updatedProfile = await activityUpdate(profile);
-        // Add your expectations for the updatedProfile based on your function logic
-        expect(updatedProfile).toEqual({
-            username: 'justind',
-            email: 'justin@email.com',
-            password: 'password',
-            myPets: [
+        // Assertions
+        expect(updatedPetProfile).toEqual({
+            _id: 'mockPetId',
+            activities: [
                 {
-                    petname: 'Riley',
-                    isDog: true,
-                    currentAge: 54,
-                    activities: [
-                        { name: "New Puppy Visit", frequency: '12weeks', category: 'young', isComplete: true, lastCompleted: ''  },
-                        { name: "Dewormer Medication", frequency: '12weeks', category: 'young', isComplete: true, lastCompleted: ''  },
-                        { name: 'Microchip', frequency: '12weeks', category: 'young', isComplete: true, lastCompleted: ''  },
-                    ]
-                }
-            ]
+                    frequency: 'monthly',
+                    lastCompleted: new Date('2022-01-01'),
+                    isComplete: false, // Expecting isComplete to be updated based on the condition
+                },
+                {
+                    frequency: 'yearly',
+                    lastCompleted: new Date('2021-01-01'),
+                    isComplete: false, // Expecting isComplete to be updated based on the condition
+                },
+                {
+                    frequency: 'everyThreeYears',
+                    lastCompleted: new Date('2018-01-01'),
+                    isComplete: false, // Expecting isComplete to be updated based on the condition
+                },
+            ],
         });
-    });
-
-    test('should update activities if currentAge is greater than 52 and category is young', async () => {
-        const profile = {
-            username: 'justind',
-            email: 'justin@email.com',
-            password: 'password',
-            myPets: [
-                {
-                    petname: 'Riley',
-                    isDog: true,
-                    currentAge: 54,
-                    activities: [
-                        { name: "New Puppy Visit", frequency: '12weeks', category: 'adult', isComplete: false, lastCompleted: ''  },
-                        { name: "Dewormer Medication", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
-                        { name: 'Microchip', frequency: '12weeks', category: 'adult', isComplete: false, lastCompleted: ''  },
-                    ]
-                }
-            ]
-        };
-
-        const updatedProfile = await activityUpdate(profile);
-        // Add your expectations for the updatedProfile based on your function logic
-        expect(updatedProfile).toEqual(profile);
     });
 });
