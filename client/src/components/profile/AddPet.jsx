@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_PET } from '../../utils/mutations';
 import { X } from "lucide-react"; // Import the X icon from lucide-react
@@ -9,6 +9,37 @@ const AddPet = ({ showModal, setShowModal }) => {
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState(''); // New state for pet weight
   const [addPet, { error }] = useMutation(ADD_PET);
+  // state to store the age input from the user
+  const [ageInfo, setAgeInfo] = useState({
+    ageYear: 0,
+    ageMonth: 0,
+    ageWeek: 0
+  })
+  
+  const updateAgeInfo = (e) => {
+    const { name, value } = e.target;
+    
+    setAgeInfo(ageInfo => ({
+      ...ageInfo,
+      [name]: value
+    }));
+  }
+  
+  // converts years and months into weeks and updates age state whenever ageInfo is updated
+  useEffect(() => {
+    const weekValues = []
+    weekValues.push(ageInfo.ageYear * 52);
+    weekValues.push(ageInfo.ageMonth * 4);
+    weekValues.push(parseInt(ageInfo.ageWeek));
+
+    const ageEntry = weekValues.reduce((acc, value) => acc + value, 0)
+
+    if (ageEntry) {
+      setAge(ageEntry);
+    };
+
+    console.log(age);
+  }, [ageInfo])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +59,9 @@ const AddPet = ({ showModal, setShowModal }) => {
       console.error(err);
     }
   };
-  let i = 0;
+
+  
+  let i = 0-1;
   let j = 0;
   const yearOptions = [];
   const monthOptions = []
@@ -65,17 +98,17 @@ const AddPet = ({ showModal, setShowModal }) => {
           <label htmlFor="age" className="block mb-2">Age:</label>
           <div className="flex justify-between mb-2">
             <div>
-              <select id='ageyear' value='' className="text-gray-700 border border-gray-300 rounded-md w-20">
+              <select name='ageYear' value={ageInfo.ageYear} onChange={updateAgeInfo} className="text-gray-700 border border-gray-300 rounded-md w-20">
                 { yearOptions }
               </select> Year(s)
             </div>
             <div>
-              <select id='agemonth' value='' className="text-gray-700 border border-gray-300 rounded-md w-20">
+              <select name='ageMonth' value={ageInfo.ageMonth} onChange={updateAgeInfo} className="text-gray-700 border border-gray-300 rounded-md w-20">
                 { monthOptions }
               </select> Month(s)
             </div>
             <div>
-              <input type="number" id="ageweek" placeholder=" weeks" className="text-gray-700 border border-gray-300 rounded-md w-20"/>
+              <input type="number" name="ageWeek" value={ageInfo.ageWeek} onChange={updateAgeInfo} placeholder=" weeks" className="text-gray-700 border border-gray-300 rounded-md w-20"/>
             </div>
           </div>
 
