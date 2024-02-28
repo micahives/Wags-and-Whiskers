@@ -18,7 +18,7 @@ const AddPet = ({ showModal, setShowModal }) => {
           petName,
           isDog,
           age: parseInt(age),
-          weight: parseInt(weight) // Include weight in the mutation variables
+          weight: parseFloat(weight) // Include weight in the mutation variables
         }
       });
       // Close the modal after successful submission

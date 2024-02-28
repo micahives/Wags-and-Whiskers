@@ -34,7 +34,7 @@ const resolvers = {
                     petProfile = await checkAge(petProfile);
 
                     // updates the activity to false if it has been longer than the frequency would dictate
-                    //petProfile = await activityUpdate(petProfile);
+                    petProfile = await activityUpdate(petProfile);
 
                     // saves any changes to the Pet object to the database before being sent to the user
                     petProfile.save();
