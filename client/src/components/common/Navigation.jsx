@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X } from "lucide-react";
 import Auth from '../../utils/auth';
-// import { FaBars } from 'react-icons/fa';
-// import { Collapse, Dropdown, initTE } from 'tw-elements';
 
 const NavLinks = ({ isOpen }) => {
     return (
@@ -60,40 +58,3 @@ const Navigation = () => {
 }
 
 export default Navigation;
-
-// const Navigation = () => {
-//     const location = useLocation();
-//     const [isOpen, setIsOpen] = useState(false);
-
-//     useEffect(() => {
-//         initTE({ Collapse, Dropdown });
-//     }, []);
-
-//     const toggleMenu = () => {
-//         setIsOpen(!isOpen);
-//     };
-
-//     return (
-//         <nav className="border-b border-gray-600 py-4 fixed w-full top-0 z-10">
-//             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//                 <div className="flex items-center h-12">
-//                     <div className="flex items-center">
-//                         <div className="flex-shrink-0 flex items-center">
-//                             {/* Menu icon hidden on larger screens */}
-//                             <FaBars className="h-8 text-white md:hidden cursor-pointer" onClick={toggleMenu} />
-//                         </div>
-//                     </div>
-//                     <div className={`md:flex md:items-center md:space-x-4 ${isOpen ? 'block' : 'hidden'}`}>
-//                         <div className="ml-10 md:flex md:items-baseline md:space-x-4">
-//                             <Link to="/Profile" className={location.pathname === '/Profile' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block' : ' text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block'}>Profile</Link>
-//                             <Link to="/Wellness" className={location.pathname === '/Wellness' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block'}>Wellness</Link>
-//                             <Link to="/" onClick={Auth.logout} className={location.pathname === '/' ? 'bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block' : 'text-white bg-gray-400 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-base font-medium block md:inline-block'}>Logout</Link>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </nav>
-//     );
-// };
-
-// export default Navigation;
