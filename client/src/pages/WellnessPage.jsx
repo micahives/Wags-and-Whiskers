@@ -5,6 +5,7 @@ import Footer from '../components/common/Footer';
 import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import { PET_PROFILE } from '../utils/queries';
+import { EDIT_ACTIVITY } from '../utils/mutations';
 import { useParams } from 'react-router-dom';
 import greendog from '../assets/greendog.svg'
 import greencat from '../assets/greencat.svg'
@@ -12,12 +13,14 @@ import greencat from '../assets/greencat.svg'
 
 
 const WellnessPage = () => {
+  const[editActivity] = useMutation(EDIT_ACTIVITY);
   const [petCareChecklist, setPetCareChecklist] = useState([]);
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
     variables: { petId }, //  <---------------Pulls in petId from url Params----------------------<<<
   });
+
 
   useEffect(() => {
     const getPetData = async () => {
@@ -42,8 +45,8 @@ const WellnessPage = () => {
     
 
         // console.log(petCareChecklist)//                                  CONSOLE LOGS
-        // console.log("PET CARE CHECKLIST STATE", JSON.stringify(petCareChecklist))
-        console.log("Activities", JSON.stringify(activities))
+
+        console.log(activities)
 
 
       } catch (err) {
@@ -54,26 +57,73 @@ const WellnessPage = () => {
   }, [data]);
 
   useEffect(() => {
-    refetch(); // Trigger refetch on initial render
+    refetch();
   }, [refetch]);
 
-  const handleChecklistChange = (id) => {
+  //                                                              MAKES ISCOMPLETE TRUE
+  const handleChecklistChangeTrue = async (id,isComplete) => {
     // const currentDate = date.now
     const updatedPetCareChecklist = petCareChecklist.map((item) =>
       item.id === id
         ? { ...item, isChecked: !item.isChecked, isComplete: !item.isComplete, }
         : item
     );
+    try {
+      const { data } = await editActivity({
+        variables: {
+          petId: petId,
+          activityId: id,
+          isComplete: true // Toggle the completion status
+        }
+      });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
     setPetCareChecklist(updatedPetCareChecklist);
   };
 
+//                                                                   MAKES ISCOMPLETE FALSE
+    const handleChecklistChangeFalse = async (id,isComplete) => {
+    // const currentDate = date.now
+    const updatedPetCareChecklist = petCareChecklist.map((item) =>
+      item.id === id
+        ? { ...item, isChecked: !item.isChecked, isComplete: !item.isComplete, }
+        : item
+    );
+    try {
+      const { data } = await editActivity({
+        variables: {
+          petId: petId,
+          activityId: id,
+          isComplete: false 
+        }
+      });
+      console.log(data); 
+    } catch (error) {
+      console.error(error);
+    }
+    setPetCareChecklist(updatedPetCareChecklist);
+  };
+  
   //                                                                                  FILTERING LISTS TO SORT THEM
   const completedPetCareChecklist = petCareChecklist.filter((item) => item.isComplete);
   const notCompletedPetCareChecklist= petCareChecklist.filter((item => !item.isComplete))
-  // const yearlyNotCompletedPet = petCareChecklist.filter(
-  //   (item) => !item.isComplete && (item.frequency === 'yearly' || item.frequency === 'everyThreeYears'));
-  // const monthlyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'monthly');
-  // const dailyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'daily');
+
+
+
+
+//                                                                                DATE FORMATING
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp[0]);
+  // Format the date as desired, for example: "Month Day, Year"
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+};
+
+// const formattedDate = formatDate(1709148504087);
+// console.log(formattedDate); // Output will be something like "February 27, 2024"
+
 
 
   return (
@@ -109,8 +159,8 @@ const WellnessPage = () => {
             <ChecklistItem 
               key={item.id}
               text={` ${item.name} -${item.frequency}`}
-              isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item.id)}
+              isChecked={item.isComplete}
+              onChange={() => handleChecklistChangeTrue(item.id, item.isComplete)}
             />
           ))}
           </div>
@@ -120,9 +170,9 @@ const WellnessPage = () => {
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
-                text={` ${item.name}: Completed (date)${item.lastCompleted}`}
-                isChecked={item.isChecked}
-                onChange={() => handleChecklistChange(item.id)}
+                text={` ${item.name}------Complete: ${formatDate(item.lastCompleted)}`}
+                isChecked={item.isComplete}
+                onChange={() => handleChecklistChangeFalse(item.id)}
               />
             ))}
           </div>
