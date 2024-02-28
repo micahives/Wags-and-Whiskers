@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import Header from '../components/common/Header';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from '../utils/queries';
-import { ADD_PET } from '../utils/mutations';
+import { ADD_PET, REMOVE_PET } from '../utils/mutations';
 import AddPet from '../components/profile/AddPet';
+import ConfirmationModal from '../components/common/ConfirmationModal';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState({});
   const { loading, data, refetch } = useQuery(GET_ME);
   const [petList, setPetList] = useState([]);
   const [addPet] = useMutation(ADD_PET);
+  const [removePet] = useMutation(REMOVE_PET);
   const [showAddPetModal, setShowAddPetModal] = useState(false); // State for showing the add pet modal
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [petToRemove, setPetToRemove] = useState(null);
   
   useEffect(() => {
     const getUserData = async () => {
@@ -57,6 +61,25 @@ const handleAddPet = async (formData) => {
   }
 };
 
+const handleRemovePetClick = (petId) => {
+  setPetToRemove(petId);
+  setShowConfirmationModal(true);
+};
+
+const handleConfirmRemovePet = async () => {
+  try {
+    await removePet({
+      variables: {
+        petId: petToRemove
+      }
+    });
+    setPetList(petList.filter(pet => pet._id !== petToRemove));
+    setShowConfirmationModal(false);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 
   return (
     <div className="h-full">
@@ -81,17 +104,21 @@ const handleAddPet = async (formData) => {
           {myPets && myPets.length > 0 && ( //                                      LIST OF PETS CARD CONDITINALLY RENDERED IF DATA EXISTS
             <div>
 
-              {myPets.map((pet) => (
-                <Link to={`/Wellness/${pet._id}`} key={pet._id}>
-                  <div key={pet._id} className="bg-gray-700 p-4 rounded-lg shadow-md mx-4 mb-4">
-                    <h2 className="text-xl font-semibold">{pet.petName}</h2>
-                    <p>{pet.isDog ? 'Dog' : 'Cat'}</p>
-                    <p>Age: {pet.age} Weeks</p>
-                    <p>Weight: {pet.weight} lbs</p>
-                  </div>
-                  </Link>
-                            //                             ----------------TODO: NEEDS to LINK TO WELLNESS PAGE---------------------
-              ))}
+{myPets.map((pet) => (
+  <div key={pet._id} className="bg-gray-700 p-4 rounded-lg shadow-md mx-4 mb-4 relative hover:bg-gray-600">
+    <h2 className="text-xl font-semibold">{pet.petName}</h2>
+    <p>{pet.isDog ? 'Dog' : 'Cat'}</p>
+    <p>Age: {pet.age} Weeks</p>
+    <p>Weight: {pet.weight} lbs</p>
+    <div className="absolute inset-0">
+      <Link to={`/Wellness/${pet._id}`} className="hover: text-purple-500"style={{ width: '75%', height: '100%', position: 'absolute' }}></Link>
+    </div>
+    <div className="absolute bottom-0 right-0">
+      <button onClick={() => handleRemovePetClick(pet._id)} className="mr-4 mt-2 mb-2 text-red-500 hover:text-red-700 focus:outline-none">Remove</button>
+    </div>
+  </div>
+))}
+
             </div>
           )}
         </div>
@@ -99,6 +126,15 @@ const handleAddPet = async (formData) => {
 
       {/* AddPet modal */}
       {showAddPetModal && <AddPet showModal={showAddPetModal} setShowModal={setShowAddPetModal} />}
+
+      {/* Confirmation modal for removing pets */}
+      {showConfirmationModal && (
+        <ConfirmationModal
+          message="Are you sure you want to remove this pet? This action cannot be undone."
+          onConfirm={handleConfirmRemovePet}
+          onCancel={() => setShowConfirmationModal(false)}
+        />
+      )}
     </div>
   );
 };
