@@ -118,6 +118,7 @@ const WellnessPage = () => {
 //                                                                                DATE FORMATING
 const formatDate = (timestampString) => {
   const timestamp = parseInt(timestampString, 10);
+  console.log(timestamp);
   const date = new Date(timestamp);
   // Format the date as desired, for example: "Month Day, Year"
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -126,6 +127,17 @@ const formatDate = (timestampString) => {
 
 // const formattedDate = formatDate(1709148504087);
 // console.log(formattedDate); // Output will be something like "February 27, 2024"
+const newDate = () => {
+  const currentDate = new Date();
+
+  const formattedDate = currentDate.toLocaleDateString('en-US', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
+  return formattedDate;
+};
 
 
 
@@ -173,7 +185,7 @@ const formatDate = (timestampString) => {
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
-                text={` ${item.name}        (${formatDate(item.lastCompleted[item.lastCompleted.length - 1])})`}
+                text={` ${item.name}        (${formatDate(item.lastCompleted[item.lastCompleted.length - 1]) === 'Invalid Date' ? newDate() : formatDate(item.lastCompleted[item.lastCompleted.length - 1])})`}
                 isChecked={item.isComplete}
                 onChange={() => handleChecklistChangeFalse(item.id)}
               />
