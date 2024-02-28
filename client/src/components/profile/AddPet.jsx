@@ -28,6 +28,23 @@ const AddPet = ({ showModal, setShowModal }) => {
       console.error(err);
     }
   };
+  let i = 0;
+  let j = 0;
+  const yearOptions = [];
+  const monthOptions = []
+  while (i < 25) {
+    yearOptions.push(
+      <option value={i+1}>{i+1}</option>
+    );
+    i++;
+  };
+
+  while (j < 11) {
+    monthOptions.push(
+      <option value={j+1}>{j+1}</option>
+    );
+    j++;
+  }  
 
   return (
     <div className={`fixed inset-0 flex items-center justify-center ${showModal ? '' : 'hidden'}`}>
@@ -45,8 +62,23 @@ const AddPet = ({ showModal, setShowModal }) => {
             <option value={false}>Cat</option>
           </select>
 
-          <label htmlFor="age" className="block mb-2">Age (in weeks):</label>
-          <input type="number" id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Enter age in weeks" className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
+          <label htmlFor="age" className="block mb-2">Age:</label>
+          <div className="flex justify-between mb-2">
+            <div>
+              <select id='ageyear' value='' className="text-gray-700 border border-gray-300 rounded-md w-20">
+                { yearOptions }
+              </select> Year(s)
+            </div>
+            <div>
+              <select id='agemonth' value='' className="text-gray-700 border border-gray-300 rounded-md w-20">
+                { monthOptions }
+              </select> Month(s)
+            </div>
+            <div>
+              <input type="number" id="ageweek" placeholder=" weeks" className="text-gray-700 border border-gray-300 rounded-md w-20"/>
+            </div>
+          </div>
+
 
           {/* New input field for pet weight */}
           <label htmlFor="weight" className="block mb-2">Weight (in pounds):</label>
