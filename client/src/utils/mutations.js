@@ -23,27 +23,68 @@ export const ADD_PROFILE = gql`
 
 
 export const ADD_PET = gql`
-mutation addPet($petName: String!, $isDog: Boolean!, $age: Int!) {
-  addPet(petName: $petName, isDog: $isDog, age: $age) {
+mutation addPet($petName: String!, $isDog: Boolean!, $age: Int!, $weight: Float, $image: String) {
+  addPet(petName: $petName, isDog: $isDog, age: $age, weight: $weight, image: $image) {
     _id
-    username
-    email
-    myPets {
+    petName
+    isDog
+    age
+    currentAge
+    weight
+    image
+    activities {
       _id
-      petName
-      isDog
-      age
-      weight
-      image
-      activities {
-        _id
-        name
-        frequency
-        category
-        isComplete
-        lastCompleted
-      }
+      name
+      frequency
+      category
+      isComplete
+      lastCompleted
     }
   }
 }`;
 
+export const EDIT_PET = gql`
+mutation editPet($petId: ID!, $weight: Float, $petName: String, $image: String) {
+  editPet(petId: $petId, weight: $weight, petName: $petName, image: $image) {
+    _id
+    petName
+    isDog
+    age
+    currentAge
+    weight
+    image
+    activities {
+      _id
+      name
+      frequency
+      category
+      isComplete
+      lastCompleted
+    }
+  }
+}`
+
+export const REMOVE_PET = gql`
+mutation removePet($petId: ID!) {
+  removePet(petId: $petId) {
+    myPets {
+      _id
+      petName
+    }
+  }
+}`
+
+export const EDIT_ACTIVITY = gql`
+mutation editActivity($petId: ID!, $activityId: ID!, $isComplete: Boolean!) {
+  editActivity(petId: $petId, activityId: $activityId, isComplete: $isComplete) {
+    _id
+    activities {
+      _id
+      name
+      frequency
+      category
+      isComplete
+      lastCompleted
+    }
+  }
+}`

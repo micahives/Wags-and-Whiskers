@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        path: '/Wellness',
+        path: '/Wellness/:petId',
         element: <WellnessPage />,
       },
     ]
