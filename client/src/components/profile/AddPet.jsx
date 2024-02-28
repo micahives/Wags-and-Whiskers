@@ -23,6 +23,7 @@ const AddPet = ({ showModal, setShowModal }) => {
       });
       // Close the modal after successful submission
       setShowModal(false);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -36,20 +37,20 @@ const AddPet = ({ showModal, setShowModal }) => {
         </button>
         <form onSubmit={handleSubmit}>
           <label htmlFor="petName" className="block mb-2">Pet Name:</label>
-          <input type="text" id="petName" value={petName} onChange={(e) => setPetName(e.target.value)} placeholder="Enter pet name" className="block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
+          <input type="text" id="petName" value={petName} onChange={(e) => setPetName(e.target.value)} placeholder="Enter pet name" className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
 
           <label htmlFor="petType" className="block mb-2">Pet Type:</label>
-          <select id="petType" value={isDog} onChange={(e) => setIsDog(e.target.value === 'true')} className="block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required>
+          <select id="petType" value={isDog} onChange={(e) => setIsDog(e.target.value === 'true')} className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required>
             <option value={true}>Dog</option>
             <option value={false}>Cat</option>
           </select>
 
           <label htmlFor="age" className="block mb-2">Age (in weeks):</label>
-          <input type="number" id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Enter age in weeks" className="block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
+          <input type="number" id="age" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Enter age in weeks" className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
 
           {/* New input field for pet weight */}
           <label htmlFor="weight" className="block mb-2">Weight (in pounds):</label>
-          <input type="number" id="weight" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Enter weight in pounds" className="block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
+          <input type="number" id="weight" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Enter weight in pounds" className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
 
           <button type="submit" className="bg-white text-green-700 rounded-md px-4 py-2">Add Pet</button>
         </form>

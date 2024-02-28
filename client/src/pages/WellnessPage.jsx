@@ -6,6 +6,10 @@ import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import { PET_PROFILE } from '../utils/queries';
 import { useParams } from 'react-router-dom';
+import greendog from '../assets/greendog.svg'
+import greencat from '../assets/greencat.svg'
+
+
 
 const WellnessPage = () => {
   const [petCareChecklist, setPetCareChecklist] = useState([]);
@@ -81,10 +85,12 @@ const WellnessPage = () => {
       <div className=" flex flex-col items-center min-h-screen">
         <div>
 
+<img src="" alt="" />
 
 <div className="bg-gray-700 p-4 rounded-lg">
             <h1 className="text-2xl">Name: {petProfile.petName}</h1>
-            <img  src={petProfile.image} alt="Pet Image" />
+            {/* <img  src={petProfile.image} alt="Pet Image" /> */}
+            {petProfile.isDog ? <img  src={greendog} alt="Dog Image" /> : <img  src={greencat} alt="Cat Image" />}
               <p>{petProfile.isDog ? 'Dog' : 'Cat'}</p>
             <h3>Weight: {petProfile.weight}</h3>
             <h3>Age: {petProfile.age} Weeks</h3>
