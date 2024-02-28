@@ -30,6 +30,7 @@ const WellnessPage = () => {
         }
 
         const activities = data.petProfile.activities;            // MAPPING ACTIVITIES OUT OF THE RETURNED DATA OBJECT
+        // mappedActivities is redundant. It's the same thing as the above activities array
         const mappedActivities = activities.map(activity => ({
           id: activity._id, // Assuming you want to use the activity ID as the unique identifier
           name: activity.name,
@@ -39,6 +40,7 @@ const WellnessPage = () => {
           lastCompleted: activity.lastCompleted
         }));
         const petToDisplay = data.petProfile;
+        const frequencyArray = activities.reduce((acc, item) => [...acc, item.frequency], []);
     
         setPetProfile(petToDisplay);//                                  SETTING STATES
         setPetCareChecklist(mappedActivities)

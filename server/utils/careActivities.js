@@ -26,8 +26,8 @@ const dogCare = [
 ];
 
 const catCare = [
-    { name: "New Kitten Visit", frequency: '12 Weeks Old', category: 'young', isComplete: false, lastCompleted: ''  },
-    { name: "Dewormer Medication", frequency: '12 Weeks Old', category: 'young', isComplete: false, lastCompleted: ''  },
+    { name: "New Kitten Visit", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
+    { name: "Dewormer Medication", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
     { name: "FVRCP Vaccine", frequency: '12weeks', category: 'young', isComplete: false, lastCompleted: ''  },
     { name: "FVRCP Vaccine", frequency: '15weeks', category: 'young', isComplete: false, lastCompleted: ''  },
     { name: "FVRCP Vaccine", frequency: '18weeks', category: 'young', isComplete: false, lastCompleted: ''  },
@@ -36,9 +36,9 @@ const catCare = [
     { name: "Rabies Vaccine", frequency: '24weeks', category: 'young', isComplete: false, lastCompleted: ''  },
 
     { name: 'Flea & Tick Preventative', frequency: 'monthly', category: 'adult', isComplete: false, lastCompleted: '' },
-    { name: "FVRCP Vaccine", frequency: 'everyThreeYears', category: 'adult', isComplete: false, lastCompleted: ''  },
     { name: "Feline Leukemia Vaccine", frequency: 'yearly', category: 'adult', isComplete: false, lastCompleted: ''  },
     { name: "Rabies Vaccine", frequency: 'yearly', category: 'adult', isComplete: false, lastCompleted: ''  },
+    { name: "FVRCP Vaccine", frequency: 'everyThreeYears', category: 'adult', isComplete: false, lastCompleted: ''  },
 ]
 
 
