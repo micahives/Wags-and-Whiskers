@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';  
 import Header from '../components/common/Header';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from '../utils/queries';
@@ -8,7 +9,7 @@ import AddPet from '../components/profile/AddPet';
 const ProfilePage = () => {
   const [userData, setUserData] = useState({});
   const { loading, data, refetch } = useQuery(GET_ME);
-  const [petList, setPetList] = useState({});
+  const [petList, setPetList] = useState([]);
   const [addPet] = useMutation(ADD_PET);
   const [showAddPetModal, setShowAddPetModal] = useState(false); // State for showing the add pet modal
   
@@ -78,13 +79,16 @@ const handleAddPet = async (formData) => {
       <div className="m-8 grid grid-cols-3 gap-4">
         {myPets && myPets.length > 0 && ( //                                      LIST OF PETS CARD CONDITINALLY RENDERED IF DATA EXISTS
           <div>
+
             {myPets.map((pet) => (
-              <div key={pet._id} className="bg-gray-700 p-4 rounded-lg shadow-md m-4">
-                <h2 className="text-xl font-semibold">{pet.petName}</h2>
-                <p>{pet.isDog ? 'Dog' : 'Cat'}</p>
-                <p>Age: {pet.age} Weeks</p>
-                <p>Weight: {pet.weight} lbs</p>
-              </div>
+              <Link to={`/Wellness/${pet._id}`} key={pet._id}>
+                <div key={pet._id} className="bg-gray-700 p-4 rounded-lg shadow-md m-4">
+                  <h2 className="text-xl font-semibold">{pet.petName}</h2>
+                  <p>{pet.isDog ? 'Dog' : 'Cat'}</p>
+                  <p>Age: {pet.age} Weeks</p>
+                  <p>Weight: {pet.weight} lbs</p>
+                </div>
+                </Link>
                           //                             ----------------TODO: NEEDS to LINK TO WELLNESS PAGE---------------------
             ))}
           </div>

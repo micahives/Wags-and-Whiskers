@@ -12,9 +12,8 @@ const WellnessPage = () => {
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
-    variables: { petId: '65de977d42c559c5deb07809' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
+    variables: { petId }, //  <---------------Pulls in petId from url Params----------------------<<<
   });
-
 
   useEffect(() => {
     const getPetData = async () => {
@@ -79,7 +78,6 @@ const WellnessPage = () => {
       <div className= "mb-32">
       <Header />
       </div>
-    <h1>Note: You must input a working petId into line 15 to display info.</h1>
       <div className=" flex flex-col items-center min-h-screen">
         <div>
 
