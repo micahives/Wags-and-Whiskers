@@ -36,6 +36,7 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen flex flex-col items-center justify-center">
+        <h1 className="text-8xl font-bold mb-8" style={{ fontFamily: 'Caveat, cursive' }}>Wags and Whiskers</h1>
       <div className="w-full md:w-1/2">
         <div className="flex flex-col md:flex-row items-center justify-center">
           <img src={AnimalIcon} alt="Logo" className="w-1/2 flex-shrink-0 mb-8 md:mb-0"></img>
@@ -79,6 +80,5 @@ const LoginPage = () => {
     </div>
   );
 };
-
 
 export default LoginPage;
