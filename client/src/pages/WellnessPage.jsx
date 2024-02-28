@@ -12,10 +12,8 @@ const WellnessPage = () => {
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
-    variables: { petId: '65ddfdc08d2f843bb0fb3042' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
+    variables: { petId: '65de977d42c559c5deb07809' }, //  <---------------INJECT A WORKING PET ID FROM DB HERE----------------------<<<
   });
-
-
 
 
   useEffect(() => {
@@ -68,10 +66,12 @@ const WellnessPage = () => {
 
   //                                                                                  FILTERING LISTS TO SORT THEM
   const completedPetCareChecklist = petCareChecklist.filter((item) => item.isComplete);
-  const yearlyNotCompletedPet = petCareChecklist.filter(
-    (item) => !item.isComplete && (item.frequency === 'yearly' || item.frequency === 'everyThreeYears'));
-  const monthlyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'monthly');
-  const dailyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'daily');
+  const notCompletedPetCareChecklist= petCareChecklist.filter((item => !item.isComplete))
+  // const yearlyNotCompletedPet = petCareChecklist.filter(
+  //   (item) => !item.isComplete && (item.frequency === 'yearly' || item.frequency === 'everyThreeYears'));
+  // const monthlyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'monthly');
+  // const dailyToDoPet = petCareChecklist.filter((item) => !item.isComplete && item.frequency === 'daily');
+
 
   return (
     <div>
@@ -79,18 +79,15 @@ const WellnessPage = () => {
       <div className= "mb-32">
       <Header />
       </div>
-
+    <h1>Note: You must input a working petId into line 15 to display info.</h1>
       <div className=" flex flex-col items-center min-h-screen">
         <div>
-
-
-
-
 
 
 <div className="bg-gray-700 p-4 rounded-lg">
             <h1 className="text-2xl">Name: {petProfile.petName}</h1>
             <img  src={petProfile.image} alt="Pet Image" />
+              <p>{petProfile.isDog ? 'Dog' : 'Cat'}</p>
             <h3>Weight: {petProfile.weight}</h3>
             <h3>Age: {petProfile.age} Weeks</h3>
 
@@ -98,62 +95,35 @@ const WellnessPage = () => {
 
 
 {/* CHECKLIST */}
-<div className="bg-gray-700 mt-8 mb-32 p-4 rounded-lg">
+<div className="bg-gray-700 mt-8 mb-32 p-4 rounded-lg ">
 
-          <h1>----- Pet Care Checklist -----</h1>
+          <h1></h1>
+          <h3 className="text-2xl">--------- Pet Care Checklist ---------</h3>
 
-
-          <h3 className="text-2xl">- Daily- </h3>
-          {dailyToDoPet.map((item) => (
-            <ChecklistItem
+<br />
+          {notCompletedPetCareChecklist.map((item) => (
+            <ChecklistItem 
               key={item.id}
-              text={item.name}
+              text={` ${item.name} -${item.frequency}`}
               isChecked={item.isChecked}
               onChange={() => handleChecklistChange(item.id)}
             />
           ))}
-          <br />
-
-          <h3 className="text-2xl">- Monthly </h3>
-          {monthlyToDoPet.map((item) => (
-            <ChecklistItem
-              key={item.id}
-              text={item.name}
-              isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item.id)}
-            />
-          ))}
-          <br />
-
-          <h3 className="text-2xl">- Yearly- </h3>
-          {yearlyNotCompletedPet.map((item) => (
-            <ChecklistItem
-              key={item.id}
-              text={item.name}
-              isChecked={item.isChecked}
-              onChange={() => handleChecklistChange(item.id)}
-            />
-          ))}
-          <br />
           </div>
 
           <div className="mb-32 bg-gray-700 p-4 rounded-lg">
-            <h3 className="text-2xl">- Completed - </h3>
+            <h3 className="text-2xl">--------- Completed ---------</h3>
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
-                text={item.name}
+                text={` ${item.name}: Completed (date)${item.lastCompleted}`}
                 isChecked={item.isChecked}
                 onChange={() => handleChecklistChange(item.id)}
               />
             ))}
-           
           </div>
         </div>
       </div>
-
-
-     
     </div>
   );
 };
