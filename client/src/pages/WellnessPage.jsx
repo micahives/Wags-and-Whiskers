@@ -114,8 +114,9 @@ const WellnessPage = () => {
 
 
 //                                                                                DATE FORMATING
-const formatDate = (timestamp) => {
-  const date = new Date(timestamp[0]);
+const formatDate = (timestampString) => {
+  const timestamp = parseInt(timestampString, 10);
+  const date = new Date(timestamp);
   // Format the date as desired, for example: "Month Day, Year"
   const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   return date.toLocaleDateString('en-US', options);
@@ -170,7 +171,7 @@ const formatDate = (timestamp) => {
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
-                text={` ${item.name}------Complete: ${formatDate(item.lastCompleted)}`}
+                text={` ${item.name}        (${formatDate(item.lastCompleted[1])})`}
                 isChecked={item.isComplete}
                 onChange={() => handleChecklistChangeFalse(item.id)}
               />
