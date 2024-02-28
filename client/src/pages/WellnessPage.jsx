@@ -173,7 +173,7 @@ const formatDate = (timestampString) => {
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
-                text={` ${item.name}        (${formatDate(item.lastCompleted[1])})`}
+                text={` ${item.name}        (${formatDate(item.lastCompleted[item.lastCompleted.length - 1])})`}
                 isChecked={item.isComplete}
                 onChange={() => handleChecklistChangeFalse(item.id)}
               />
