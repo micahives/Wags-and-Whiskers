@@ -37,15 +37,15 @@ const client = new ApolloClient({
 
     return (
       <ApolloProvider client={client}>
-        <div className="flex-column justify-flex-start min-100-vh">
-          {hasToken && <Header />}
-            <main className="container mx-auto">
-              <Outlet />
-            </main>
-          <Footer />
-        </div>
-      </ApolloProvider>
-    );
+      <div className="flex flex-col min-h-screen">
+        {hasToken && <Header />}
+        <main className="flex-grow container mx-auto">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </ApolloProvider>
+  );
   }
 
 export default App;
