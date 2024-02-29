@@ -29,6 +29,7 @@ const ProfilePage = () => {
         if (data && data.me) {
           setUserData(data.me);  //                      SETS USER DATA AND THE LIST OF PETS
           setPetList(data.me.myPets);
+          setSelectedAvatar(data.me.image);
         }
       } catch (err) {
         console.error(err);
@@ -99,10 +100,10 @@ const handleSelectAvatar = (avatar) => {
   setSelectedAvatar(avatar);
   setShowAvatarModal(false);
 };
+console.log(userData);
 
   return (
 <div className="h-full">
-  <Header />
   <div className='flex flex-col sm:flex-row'>
     <div className="container px-4 py-12 mt-32 lg:w-1/2">
       <div className="max-w-xs mx-auto bg-gray-100 shadow-md rounded-lg overflow-hidden">
@@ -111,7 +112,7 @@ const handleSelectAvatar = (avatar) => {
         {/* Display the selected avatar here */}
         {selectedAvatar ? (
           <div className="flex items-center justify-center w-full h-full">
-            <img src={selectedAvatar === 'dog' ? greenDog : greenCat} alt="Selected Avatar" className="max-w-full max-h-full" />
+            <img src={userData.image === "dog" ? greenDog : greenCat} alt="Selected Avatar" className="max-w-full max-h-full" />
           </div>
         ) : (
           <span className="mt-12 text-white text-lg font-bold flex items-center justify-center">Select Avatar</span>
