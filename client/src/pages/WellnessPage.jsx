@@ -143,11 +143,8 @@ const newDate = () => {
 
   return (
     <div>
-      {/* this controls the margin o */}
-      <div className= "mb-32">
-      </div>
-      <div className=" flex flex-col items-center">
-        <div>
+      <div className=" flex flex-col items-center mt-32">
+        <div className="w-1/3">
 
 
 
