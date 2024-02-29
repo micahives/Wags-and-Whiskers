@@ -6,6 +6,7 @@ const typeDefs = `
     _id: ID
     username: String
     email: String
+    image: String
     petCount: Int
     myPets: [Pet]
   }
@@ -45,8 +46,8 @@ const typeDefs = `
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addProfile(username: String!, email: String!, password: String!): Auth
-    editProfile(email: String, password: String): Profile
+    addProfile(username: String!, email: String!, password: String!, image: String): Auth
+    editProfile(email: String, password: String, image: String): Profile
     addPet(petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
     devAddPet(profileId: ID!, petName: String!, isDog: Boolean!, age: Int!, weight: Float, image: String): Pet
     editPet(petId: ID!, petName: String, age: Int, weight: Float, image: String): Pet

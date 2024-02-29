@@ -29,6 +29,7 @@ query Me {
     username
     email
     petCount
+    image
     myPets {
       _id
       petName
