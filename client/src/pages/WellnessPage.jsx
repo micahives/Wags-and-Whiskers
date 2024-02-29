@@ -149,38 +149,22 @@ const newDate = () => {
       <div className=" flex flex-col items-center min-h-screen">
         <div>
 
-<img src="" alt="" />
+
 
 <div className="bg-gray-700 p-4 rounded-lg">
-            <h1 className="text-2xl">Name: {petProfile.petName}</h1>
+            <h1 className="text-4xl flex justify-center">{petProfile.petName} {notCompletedPetCareChecklist.length > 0 ? (<></>):(<div className="text-green-600 text-4xl font-bold">+</div>)}</h1>
             {/* <img  src={petProfile.image} alt="Pet Image" /> */}
+            <div className= "flex justify-center">
             {petProfile.isDog ? <img  src={greendog} alt="Dog Image" /> : <img  src={greencat} alt="Cat Image" />}
-              <p>{petProfile.isDog ? 'Dog' : 'Cat'}</p>
-            <h3>Weight: {petProfile.weight}</h3>
-            <h3>Age: {petProfile.age} Weeks</h3>
-
-</div>
-
-
-{/* CHECKLIST */}
-<div className="bg-gray-700 mt-8 mb-32 p-4 rounded-lg ">
-
-          <h1></h1>
-          <h3 className="text-2xl">--------- Pet Care Checklist ---------</h3>
-
-<br />
-          {notCompletedPetCareChecklist.map((item) => (
-            <ChecklistItem 
-              key={item.id}
-              text={` ${item.name} -${item.frequency}`}
-              isChecked={item.isComplete}
-              onChange={() => handleChecklistChangeTrue(item.id, item.isComplete)}
-            />
-          ))}
-          </div>
-
-          <div className="mb-32 bg-gray-700 p-4 rounded-lg">
-            <h3 className="text-2xl">--------- Completed ---------</h3>
+            </div>
+              {/* <h3 className="flex justify-center">{petProfile.isDog ? 'Dog' : 'Cat'}</h3> */}
+            <h3 className="flex justify-center">Weight: {petProfile.weight} lb</h3>
+            <h3 className="flex justify-center">Age: {petProfile.age} Weeks</h3>
+            <br />
+            {/* <h3 className="text-xl text-white">--------- Completed ---------</h3> */}
+          
+            <hr />
+            <br />
             {completedPetCareChecklist.map((item) => (
               <ChecklistItem
                 key={item.id}
@@ -189,6 +173,48 @@ const newDate = () => {
                 onChange={() => handleChecklistChangeFalse(item.id)}
               />
             ))}
+</div>
+
+{/* CHECKLIST */}
+<div className="bg-gray-700 mt-8 mb-8 p-4 rounded-lg ">
+
+         
+          {/* <h3 className="text-2xl flex justify-center">Pet Care Checklist </h3>
+          <br />
+          <hr />
+          <br />
+          {notCompletedPetCareChecklist.map((item) => (
+            <ChecklistItem 
+              key={item.id}
+              text={` ${item.name} -${item.frequency}`}
+              isChecked={item.isComplete}
+              onChange={() => handleChecklistChangeTrue(item.id, item.isComplete)}
+            />
+          ))} */}
+  {notCompletedPetCareChecklist.length > 0 ? (
+    <>
+      <h3 className="text-2xl flex justify-center">Pet Care Checklist</h3>
+      <br />
+      <hr />
+      <br />
+      {notCompletedPetCareChecklist.map((item) => (
+        <ChecklistItem 
+          key={item.id}
+          text={` ${item.name} -${item.frequency}`}
+          isChecked={item.isComplete}
+          onChange={() => handleChecklistChangeTrue(item.id, item.isComplete)}
+        />
+      ))}
+    </>
+  ) : (
+    <div className="text-center text-green-600 text-2xl">{petProfile.petName} is up to Date!</div>
+  )}
+
+{/* <div>
+{notCompletedPetCareChecklist.length > 0 ? (<></>):(<div className="text-green-500 text-3xl">+</div>
+)}
+</div> */}
+
           </div>
         </div>
       </div>
