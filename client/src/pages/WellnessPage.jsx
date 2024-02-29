@@ -7,14 +7,16 @@ import { useQuery } from '@apollo/client';
 import { PET_PROFILE } from '../utils/queries';
 import { EDIT_ACTIVITY } from '../utils/mutations';
 import { useParams } from 'react-router-dom';
-import greendog from '../assets/greendog.svg'
-import greencat from '../assets/greencat.svg'
+import EditPet from '../components/wellness/EditPet';
+import greendog from '../assets/greendog.svg';
+import greencat from '../assets/greencat.svg';
 
 
 
 const WellnessPage = () => {
   const[editActivity] = useMutation(EDIT_ACTIVITY);
   const [petCareChecklist, setPetCareChecklist] = useState([]);
+  const [showEditPetModal, setShowEditPetModal] = useState(false);
   const { petId } = useParams();
   const [petProfile, setPetProfile] = useState({});
   const { loading, data, refetch } = useQuery(PET_PROFILE, {
@@ -61,7 +63,10 @@ const WellnessPage = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-
+  
+  const handleEditPetClick = () => {
+    setShowEditPetModal(true);
+  };
   //                                                              MAKES ISCOMPLETE TRUE
   const handleChecklistChangeTrue = async (id,isComplete) => {
     // const currentDate = date.now
@@ -121,7 +126,7 @@ const formatDate = (timestampString) => {
   console.log(timestamp);
   const date = new Date(timestamp);
   // Format the date as desired, for example: "Month Day, Year"
-  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
   return date.toLocaleDateString('en-US', options);
 };
 
@@ -160,6 +165,10 @@ const newDate = () => {
               {/* <h3 className="flex justify-center">{petProfile.isDog ? 'Dog' : 'Cat'}</h3> */}
             <h3 className="flex justify-center">Weight: {petProfile.weight} lb</h3>
             <h3 className="flex justify-center">Age: {petProfile.age} Weeks</h3>
+            <button onClick={handleEditPetClick} className="mr-4 mt-2 mb-2 text-green-500 hover:text-green-700 focus:outline-none">Edit Pet</button>
+            <div className='absolute top-0 right-0'>
+              
+            </div>
             <br />
             {/* <h3 className="text-xl text-white">--------- Completed ---------</h3> */}
           
@@ -218,6 +227,7 @@ const newDate = () => {
           </div>
         </div>
       </div>
+      {showEditPetModal && <EditPet showModal={showEditPetModal} setShowModal={setShowEditPetModal} petInfo={petProfile} />}
     </div>
   );
 };

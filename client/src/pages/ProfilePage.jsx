@@ -100,7 +100,6 @@ const handleSelectAvatar = (avatar) => {
   setSelectedAvatar(avatar);
   setShowAvatarModal(false);
 };
-console.log(userData);
 
   return (
 <div className="h-full">

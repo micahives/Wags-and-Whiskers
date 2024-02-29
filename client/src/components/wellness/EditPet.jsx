@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_PET } from '../../utils/mutations';
+import { EDIT_PET } from '../../utils/mutations'
 import { X } from "lucide-react"; // Import the X icon from lucide-react
 
-const AddPet = ({ showModal, setShowModal }) => {
-  const [petName, setPetName] = useState('');
-  const [isDog, setIsDog] = useState(true); // Default to Dog?
-  const [age, setAge] = useState('');
-  const [weight, setWeight] = useState(''); // New state for pet weight
-  const [addPet, { error }] = useMutation(ADD_PET);
+const EditPet = ({ showModal, setShowModal, petInfo }) => {
+  const [petId] = useState(petInfo._id);
+  const [petName, setPetName] = useState(petInfo.petName);
+  const [isDog, setIsDog] = useState(petInfo.isDog); // Default to Dog?
+  const [age, setAge] = useState();
+  const [weight, setWeight] = useState(petInfo.weight); // New state for pet weight
+  const [editPet, { error }] = useMutation(EDIT_PET);
   // state to store the age input from the user
   const [ageInfo, setAgeInfo] = useState({
     ageYear: 0,
     ageMonth: 0,
-    ageWeek: 0
+    ageWeek: petInfo.age
   })
   
   const updateAgeInfo = (e) => {
@@ -44,8 +45,9 @@ const AddPet = ({ showModal, setShowModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addPet({
+      await editPet({
         variables: {
+          petId,
           petName,
           isDog,
           age: parseInt(age),
@@ -54,12 +56,12 @@ const AddPet = ({ showModal, setShowModal }) => {
       });
       // Close the modal after successful submission
       setShowModal(false);
-      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
+  const placeholder = `${age} weeks` 
   
   let i = 0-1;
   let j = 0-1;
@@ -108,7 +110,7 @@ const AddPet = ({ showModal, setShowModal }) => {
               </select> Mo
             </div>
             <div>
-              <input type="number" name="ageWeek" value={ageInfo.ageWeek} onChange={updateAgeInfo} placeholder=" weeks" className="text-gray-700 border border-gray-300 rounded-md w-20"/> Wk
+              <input type="number" name="ageWeek" value={ageInfo.ageWeek} onChange={updateAgeInfo} placeholder={placeholder} className="text-gray-700 border border-gray-300 rounded-md w-20"/> Wk
             </div>
           </div>
 
@@ -117,7 +119,7 @@ const AddPet = ({ showModal, setShowModal }) => {
           <label htmlFor="weight" className="block mb-2">Weight (in pounds):</label>
           <input type="number" id="weight" value={weight} onChange={(e) => setWeight(e.target.value)} placeholder="Enter weight in pounds" className="text-gray-700 block w-full border border-gray-300 rounded-md px-4 py-2 mb-4" required />
 
-          <button type="submit" className="bg-white text-green-700 rounded-md px-4 py-2">Add Pet</button>
+          <button type="submit" className="bg-white text-green-700 rounded-md px-4 py-2">Update Pet</button>
         </form>
         {error && <p className="text-red-500 mt-4">Error: {error.message}</p>}
       </div>
@@ -125,4 +127,4 @@ const AddPet = ({ showModal, setShowModal }) => {
   );
 };
 
-export default AddPet;
+export default EditPet;
