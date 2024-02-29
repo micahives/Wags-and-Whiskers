@@ -37,6 +37,7 @@ const catCare = [
     { name: 'Spay/Neuter', frequency: '24weeks', category: 'young', isComplete: false, lastCompleted: ''  }, 
 
     { name: 'Flea & Tick Preventative', frequency: 'monthly', category: 'adult', isComplete: false, lastCompleted: '' },
+    { name: 'Vet Appointment: Wellness Visit', frequency: 'yearly', category: 'adult', isComplete: false, lastCompleted: '' },
     { name: "Feline Leukemia Vaccine", frequency: 'yearly', category: 'adult', isComplete: false, lastCompleted: ''  },
     { name: "Rabies Vaccine", frequency: 'yearly', category: 'adult', isComplete: false, lastCompleted: ''  },
     { name: "FVRCP Vaccine", frequency: 'everyThreeYears', category: 'adult', isComplete: false, lastCompleted: ''  },

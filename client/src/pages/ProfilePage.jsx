@@ -134,7 +134,7 @@ const handleSelectAvatar = (avatar) => {
   <div key={pet._id} className="bg-gray-700 p-4 rounded-lg shadow-md mx-4 mb-4 relative hover:bg-gray-600">
     <h2 className="text-xl font-semibold">{pet.petName}</h2>
     <p>{pet.isDog ? 'Dog' : 'Cat'}</p>
-    <p>Age: {pet.age} Weeks</p>
+    <p>Age: {pet.currentAge} Weeks</p>
     <p>Weight: {pet.weight} lbs</p>
     <div className="absolute inset-0">
       <Link to={`/Wellness/${pet._id}`} className="hover: text-purple-500"style={{ width: '75%', height: '100%', position: 'absolute' }}></Link>

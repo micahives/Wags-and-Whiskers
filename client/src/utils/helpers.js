@@ -16,6 +16,6 @@ export const handleFrequency = (activity) => {
     case 'everyThreeYears':
       return 'Every Three Years';
     default:2
-      return 'Default case';
+      return '';
     }
 };
