@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
 import { X } from 'lucide-react'; // Importing the 'X' icon from lucide-react
 import greenCat from '../../assets/greencat.svg';
 import greenDog from '../../assets/greendog.svg';
+import { EDIT_PROFILE } from '../../utils/mutations';
 
 const AvatarModal = ({ onClose, onSelectAvatar }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [editProfile] = useMutation(EDIT_PROFILE);
 
-  const handleSelectAvatar = (avatar) => {
+  const handleSelectAvatar = async (avatar) => {
+    const data = await editProfile({
+      variables: {image: avatar}
+    });
     setSelectedAvatar(avatar);
     onSelectAvatar(avatar); // Pass the selected avatar back to the parent component
+
   };
 
   return (

@@ -22,6 +22,7 @@ const profileSchema = new Schema(
         },
         image: {
             type: String,
+            default: ""
         },
         myPets: [Pet.schema]
 
