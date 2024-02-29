@@ -50,7 +50,6 @@ const WellnessPage = () => {
 
         // console.log(petCareChecklist)//                                  CONSOLE LOGS
 
-        console.log(activities)
 
 
       } catch (err) {
@@ -83,7 +82,6 @@ const WellnessPage = () => {
           isComplete: true // Toggle the completion status
         }
       });
-      console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -105,8 +103,7 @@ const WellnessPage = () => {
           activityId: id,
           isComplete: false 
         }
-      });
-      console.log(data); 
+      }); 
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +120,6 @@ const WellnessPage = () => {
 //                                                                                DATE FORMATING
 const formatDate = (timestampString) => {
   const timestamp = parseInt(timestampString, 10);
-  console.log(timestamp);
   const date = new Date(timestamp);
   // Format the date as desired, for example: "Month Day, Year"
   const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
@@ -151,7 +147,7 @@ const newDate = () => {
       {/* this controls the margin o */}
       <div className= "mb-32">
       </div>
-      <div className=" flex flex-col items-center min-h-screen">
+      <div className=" flex flex-col items-center">
         <div>
 
 
