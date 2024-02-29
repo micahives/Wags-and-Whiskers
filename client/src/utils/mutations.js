@@ -21,6 +21,26 @@ export const ADD_PROFILE = gql`
   }
 `;
 
+export const EDIT_PROFILE = gql`
+mutation editProfile($email: String, $password: String, $image: String) {
+  editProfile(email: $email, password: $password, image: $image) {
+    _id
+    username
+    email
+    image
+    petCount
+    myPets {
+      _id
+      petName
+      isDog
+      age
+      currentAge
+      weight
+      image
+    }
+  }
+}`
+
 
 export const ADD_PET = gql`
 mutation addPet($petName: String!, $isDog: Boolean!, $age: Int!, $weight: Float, $image: String) {

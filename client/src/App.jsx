@@ -33,15 +33,16 @@ const client = new ApolloClient({
   });
 
   function App() {
+    const hasToken = localStorage.getItem('id_token') !== null;
+
     return (
       <ApolloProvider client={client}>
         <div className="flex-column justify-flex-start min-100-vh">
-          <main className="container w-full">
-            <Outlet />
-          </main>
-        <div className="bottom-0 left-0 right-0 text-center">
+          {hasToken && <Header />}
+            <main className="container mx-auto">
+              <Outlet />
+            </main>
           <Footer />
-        </div> 
         </div>
       </ApolloProvider>
     );

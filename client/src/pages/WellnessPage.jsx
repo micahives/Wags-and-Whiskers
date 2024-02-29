@@ -145,7 +145,6 @@ const newDate = () => {
     <div>
       {/* this controls the margin o */}
       <div className= "mb-32">
-      <Header />
       </div>
       <div className=" flex flex-col items-center min-h-screen">
         <div>

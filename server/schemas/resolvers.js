@@ -48,7 +48,7 @@ const resolvers = {
     },
 
     Mutation: {
-        login: async (parent, { email, password }) => {
+        login: async (parent, { email, password, image }) => {
             let profile = await Profile.findOne({ email })
       
             if (!profile) {
@@ -64,9 +64,9 @@ const resolvers = {
             const token = signToken(profile);      
             return { token, profile };
           },
-        addProfile: async (parent, {username, email, password}) => {
+        addProfile: async (parent, {username, email, password, image}) => {
             try {
-              const profile = await Profile.create({username, email, password});
+              const profile = await Profile.create({username, email, password, image});
               const token = signToken(profile);
             
               return { token, profile }
@@ -74,7 +74,7 @@ const resolvers = {
                 console.error(err);
             }
           },
-        editProfile: async (parent, { email, password }, context) => {
+        editProfile: async (parent, { email, password, image }, context) => {
             if (!context.profile) {
                 return;
             }
@@ -82,7 +82,7 @@ const resolvers = {
             try {
                 const updatedProfile = await Profile.findOneAndUpdate(
                     { _id: context.profile._id },
-                    { email: email, password: password },
+                    { email: email, password: password, image: image },
                     { new: true,  runValidators: true }
                 );
         
