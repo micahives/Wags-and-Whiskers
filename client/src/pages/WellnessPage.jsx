@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ChecklistItem from '../components/wellness/Checklist';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
+import { handleFrequency } from '../utils/helpers'
 import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import { PET_PROFILE } from '../utils/queries';
@@ -205,7 +204,7 @@ const newDate = () => {
       {notCompletedPetCareChecklist.map((item) => (
         <ChecklistItem 
           key={item.id}
-          text={` ${item.name} -${item.frequency}`}
+          text={` ${item.name} - ${handleFrequency(item.frequency)}`}
           isChecked={item.isComplete}
           onChange={() => handleChecklistChangeTrue(item.id, item.isComplete)}
         />
