@@ -83,8 +83,7 @@ const handleConfirmRemovePet = async () => {
 
   return (
     <div className="h-full">
-      <Header />
-      <div className='flex flex-col sm:flex-row'>
+      <div className='flex flex-col md:flex-row'>
         <div className="container px-4 py-12 mt-32 lg:w-1/2">
           <div className="max-w-xs mx-auto bg-gray-100 shadow-md rounded-lg overflow-hidden">
             <div className="p-4 h-full">

@@ -6,7 +6,7 @@ import Auth from '../../utils/auth';
 const NavLinks = ({ isOpen }) => {
     return (
         <>
-            <NavLink to="/Profile" className={`mr-8 ${isOpen ? '' : 'bg-dark-background border border-gray-400 rounded-full px-4 py-1'}`} >Profile</NavLink>
+            <NavLink to="/Profile" className={`mr-24 ${isOpen ? '' : 'bg-dark-background border border-gray-400 rounded-full px-4 py-1'}`} >Profile</NavLink>
             {/* <NavLink to="/Wellness" className={`mr-8 ${isOpen ? '' : 'border border-gray-400 rounded-full px-4 py-1'}`}>Wellness</NavLink> */}
             <NavLink to="/" onClick={Auth.logout} className={`mr-8 ${isOpen ? '' : 'border border-gray-400 rounded-full px-4 py-1'}`}>Logout</NavLink>
         </>
@@ -41,7 +41,7 @@ const Navigation = () => {
     return (
         <>
             <nav className="w-1/3 flex justify-end">
-                <div className='hidden w-full md:flex justify-between mr-24'>
+                <div className='hidden w-full md:flex'>
                     <NavLinks isOpen={isOpen} />
                 </div>
                 <div className='md:hidden'>
