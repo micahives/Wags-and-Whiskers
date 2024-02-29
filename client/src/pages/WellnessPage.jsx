@@ -143,11 +143,8 @@ const newDate = () => {
 
   return (
     <div>
-      {/* this controls the margin o */}
-      <div className= "mb-32">
-      </div>
-      <div className=" flex flex-col items-center">
-        <div>
+      <div className=" flex flex-col items-center mt-32">
+        <div className="w-1/3">
 
 
 
@@ -159,7 +156,7 @@ const newDate = () => {
             </div>
               {/* <h3 className="flex justify-center">{petProfile.isDog ? 'Dog' : 'Cat'}</h3> */}
             <h3 className="flex justify-center">Weight: {petProfile.weight} lb</h3>
-            <h3 className="flex justify-center">Age: {petProfile.age} Weeks</h3>
+            <h3 className="flex justify-center">Age: {petProfile.currentAge} Weeks</h3>
             <button onClick={handleEditPetClick} className="mr-4 mt-2 mb-2 text-green-500 hover:text-green-700 focus:outline-none">Edit Pet</button>
             <div className='absolute top-0 right-0'>
               
